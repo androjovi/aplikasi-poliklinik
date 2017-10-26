@@ -1,3 +1,4 @@
+
 <?php
 $this->load->view('page/template/head');
 ?>
@@ -41,44 +42,188 @@ $this->load->view('page/template/sidebar');
             <!-- small box -->
             <div class="small-box bg-aqua">
                 <div class="inner">
-                    <h3>150</h3>
+                    <h3><?php echo $total_pasien; ?></h3>
                     <p>Total pasien</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-bag"></i>
+                    <i class="fa fa-heart"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+
             </div>
         </div><!-- ./col -->
         <div class="col-lg-3 col-xs-6">
             <!-- small box -->
             <div class="small-box bg-green">
                 <div class="inner">
-                    <h3>53<sup style="font-size: 20px">%</sup></h3>
+                    <h3><?php echo $total_poliklinik; ?></h3>
                     <p>Total poliklinik</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-stats-bars"></i>
+                    <i class="fa fa-hospital-o"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+
             </div>
         </div><!-- ./col -->
         <div class="col-lg-3 col-xs-6">
             <!-- small box -->
             <div class="small-box bg-yellow">
                 <div class="inner">
-                    <h3>44</h3>
+                    <h3><?php echo $total_dokter; ?></h3>
                     <p>Total dokter</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-person-add"></i>
+                    <i class="fa fa-user-md"></i>
                 </div>
-                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+
             </div>
         </div><!-- ./col -->
 
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-yellow">
+                <div class="inner">
+                    <h3><?php echo $total_obat; ?></h3>
+                    <p>Total obat</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-medkit"></i>
+                </div>
+
+            </div>
+        </div><!-- ./col -->
+      </div>
+
     <!-- Main row -->
-    
+
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+          <!-- general form elements -->
+          <div class="box box-danger" >
+            <div class="box-header with-border">
+              <h3 class="box-title">Pendaftaran</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+
+            <script>
+               function get_dokter() {
+                var dokter= $("#kode_dokter").val();
+                $.ajax({
+                  type : "POST",
+                  dataType: "JSON",
+                  url : "<?php echo site_url('dashboard/find_dokter'); ?>",
+                  data : {get_dokter : dokter},
+                  success:function(data){
+                    $.each(data, function(i,n){
+                      $("#view_dokter").append(
+                        '<option value="'+n.kode_dkt+'">'+n.nama_dkt+'</option>'
+                      );
+                    });
+                  }
+                })
+                $("#view_dokter").empty();
+              }
+
+
+
+            function random_all() {
+        var campur = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+        var panjang = 4;
+        var prefix = 'P';
+        var random_all = '';
+        for (var i=0; i<panjang; i++) {
+            var hasil = Math.floor(Math.random() * campur.length);
+            random_all += campur.substring(hasil,hasil+1);
+        }
+        document.form_pendaftar.nom_pendaftar.value = "P_"+random_all;
+    }
+</script>
+<div id="tes"><div>
+            <form class="form-horizontal" name="form_pendaftar" action="<?php echo  site_url('dashboard/submit_pendaftar'); ?>" method="post">
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Nomor pendaftar</label>
+
+                  <div class="col-sm-10">
+
+                    <input type="text" readonly class="form-control" value=""  placeholder="Nomor pendaftar" name="nom_pendaftar" required="true">
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-info btn-flat" onClick="random_all()">Generate</button>
+                    </span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Tanggal pendaftar</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" readonly  placeholder="Tanggal pendaftar" value="<?php echo date('d-m-Y, D'); ?>" name="tangga_pendaftar" required="true">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Kode poliklinik</label>
+
+                  <div class="col-sm-10">
+                    <select onclick="get_dokter()" id="kode_dokter" name="kode_plk" class="form-control">
+                    <?php foreach($kode_poliklinik as $k): ?>
+                      <option value="<?php echo $k->kode_plk; ?>"><?php echo $k->kode_plk." -- ".$k->nama_plk; ?></option>
+                    <?php endforeach; ?>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Kode dokter</label>
+
+                  <div class="col-sm-10">
+                    <select name="kode_dokter" class="form-control" id="view_dokter">
+
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-2 control-label">Kode pasien</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control"  placeholder="Kode pasien" name="kod_pasien" required="true">
+                    <div >
+                      <label>
+                        <input type="checkbox">
+                        Apakah pasien baru ?
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Keterangan</label>
+
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control"  placeholder="Keterangan (Optional)" name="keteranga">
+                  </div>
+                </div>
+
+              <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">Biaya</label>
+
+                <div class="col-sm-10">
+                  <input type="number" class="form-control"  placeholder="Dalam rupiah" name="biay" required="true">
+                </div>
+              </div>
+            </div>
+
+              <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="reset" class="btn btn-default">Reset</button>
+
+              </div>
+            </form>
+          </div>
+          <!-- /.box -->
+        </div>
+        </div>
+
+
+
 </section><!-- /.content -->
 
 
@@ -88,6 +233,7 @@ $this->load->view('page/template/js');
 
 <!--tambahkan custom js disini-->
 <!-- jQuery UI 1.11.2 -->
+
 <script src="<?php echo base_url('assets/js/jquery-ui.min.js') ?>" type="text/javascript"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>

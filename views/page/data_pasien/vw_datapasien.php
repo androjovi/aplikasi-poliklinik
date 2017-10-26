@@ -18,7 +18,7 @@ $this->load->view('page/template/head');
 <script>
 function hapus_confirm(){
   var msg;
-  msg= "Apakah Anda Kemed Yakin Akan Menghapus Data ? " ;
+  msg= "Apakah Anda Yakin Akan Menghapus Data ? " ;
   var agree=confirm(msg);
   if (agree)
   return true ;
@@ -52,8 +52,8 @@ $this->load->view('page/template/sidebar');
             <!-- small box -->
             <div class="small-box bg-aqua">
                 <div class="inner">
-                    <h3><?php echo $total_dataobat; ?></h3>
-                    <p>Total obat</p>
+                    <h3><?php echo $total_pasien; ?></h3>
+                    <p>Total pasien</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-bag"></i>
@@ -63,73 +63,77 @@ $this->load->view('page/template/sidebar');
 
         </div><!-- ./col -->
               <a id="add_obat" class="btn btn-app">
-                <i class="fa fa-plus-square"></i> Tambah obat
+                <i class="fa fa-plus-square"></i> Tambah pasien
               </a>
       </div>
-<div id="tampil_addobat" style="display:none;">
 
-  <div class="row">
-      <!-- left column -->
-      <div class="col-md-12">
-        <!-- general form elements -->
-        <div class="box box-danger" >
-          <div class="box-header with-border">
-            <h3 class="box-title">Tambah data</h3>
-          </div>
-          <!-- /.box-header -->
-          <!-- form start -->
-          <form class="form-horizontal" action="<?php echo  site_url('datamaster/submit_dataobat'); ?>" method="post">
-            <div class="box-body">
-              <div class="form-group">
-                <label for="inputEmail3" class="col-sm-2 control-label">Nama obat</label>
+      <div id="tampil_addobat" style="display:none;">
 
-                <div class="col-sm-10">
-                  <input type="text" class="form-control"  placeholder="Nama obat" name="nam_obat" required="true">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+              <!-- general form elements -->
+              <div class="box box-danger" >
+                <div class="box-header with-border">
+                  <h3 class="box-title">Tambah data</h3>
                 </div>
-              </div>
-              <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">Jenis obat</label>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form class="form-horizontal" action="<?php echo  site_url('datamaster/submit_datapasien'); ?>" method="post">
+                  <div class="box-body">
+                    <div class="form-group">
+                      <label for="inputEmail3" class="col-sm-2 control-label">Nama pasien</label>
 
-                <div class="col-sm-10">
-                  <input type="Jenis obat" class="form-control"  placeholder="Jenis obat" name="jeni_obat" required="true">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">Kategori</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control"  placeholder="Nama pasien" name="nam_psn" required="true">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="inputPassword3" class="col-sm-2 control-label">Alamat pasien</label>
 
-                <div class="col-sm-10">
-                  <input type="Kategori" class="form-control"  placeholder="Kategori" name="kategor" required="true">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">Harga obat</label>
+                      <div class="col-sm-10">
+                        <textarea name="alamat" placeholder="Alamat..." class="form-control" required="true"></textarea>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="inputPassword3" class="col-sm-2 control-label">Jenis kelamin</label>
 
-                <div class="col-sm-10">
-                  <input type="number" class="form-control"  placeholder="Harga (dalam Rupiah)" name="harg_obat">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">Jumlah obat</label>
+                      <div class="col-sm-10">
+                        <select name="jenis_kelamin" class="form-control" required="true">
+                          <option disabled="true">--Pilih--</option>
+                          <option value="laki-laki">Laki - laki</option>
+                          <option value="perempuan">Perempuan</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="inputPassword3" class="col-sm-2 control-label">Umur</label>
 
-                <div class="col-sm-10">
-                  <input type="number" class="form-control"  placeholder="Jumlah obat" name="jumla_obat" required="true">
-                </div>
+                      <div class="col-sm-10">
+                        <input type="number" class="form-control"  placeholder="Umur" name="umu" required="true">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="inputPassword3" class="col-sm-2 control-label">No telp</label>
+
+                      <div class="col-sm-10">
+                        <input type="number" class="form-control"  placeholder="Nomor telepon" name="n_telp" required="true">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="reset" class="btn btn-default">Reset</button>
+
+                  </div>
+                </form>
               </div>
+              <!-- /.box -->
+            </div>
             </div>
 
-            <div class="box-footer">
-              <button type="submit" class="btn btn-primary">Submit</button>
-              <button type="reset" class="btn btn-default">Reset</button>
-
-            </div>
-          </form>
-        </div>
-        <!-- /.box -->
       </div>
-      </div>
-
-</div>
-
 
     <div class="row">
       <div class="col-xs-12">
@@ -154,12 +158,12 @@ $this->load->view('page/template/sidebar');
                 <thead>
 
                 <tr>
-                  <th>Kode obat</th>
-                  <th>Nama obat</th>
-                  <th>Jenis obat</th>
-                  <th>Kategori</th>
-                  <th>Harga</th>
-                  <th>Jumlah obat</th>
+                  <th>Kode pasien</th>
+                  <th>Nama pasien</th>
+                  <th>Alamat pasien</th>
+                  <th>Jenis kelamin</th>
+                  <th>Umur</th>
+                  <th>Telepon</th>
                   <th>Action</th>
                 </tr>
 
@@ -167,13 +171,13 @@ $this->load->view('page/template/sidebar');
                 <tbody>
                   <?php foreach($query as $k): ?>
                 <tr id="test">
-                  <td><?php echo $k->kode_obat; ?></td>
-                  <td><?php echo $k->nama_obat; ?></td>
-                  <td><?php echo $k->jenis_obat; ?></td>
-                  <td><?php echo $k->kategori; ?></td>
-                  <td><?php num_format($k->harga_obat); ?></td>
-                  <td><?php echo $k->jumlah_obat; ?></td>
-                  <td><a class="btn btn-primary" href="<?php echo site_url('datamaster/edit_obat/'. ency($k->kode_obat)); ?>" role="button"><i class="fa fa-edit"></i>Edit</a> <a id="hapus_obat" href="<?php echo site_url ("datamaster/hapus_obat/".ency($k->kode_obat)); ?>" onClick="return hapus_confirm()" href="javascript::void(0)" class="btn btn-danger" role="button"><i class="fa fa-remove"></i> Hapus</a></td>
+                  <td><?php echo $k->kode_psn; ?></td>
+                  <td><?php echo $k->nama_psn; ?></td>
+                  <td><?php echo $k->alamat_psn; ?></td>
+                  <td><?php echo $k->gender_psn; ?></td>
+                  <td><?php echo $k->umur_psn; ?></td>
+                  <td><?php echo $k->telepon_psn; ?></td>
+                  <td><a class="btn btn-primary" href="<?php echo site_url('datamaster/edit_pasien/'. ency($k->kode_psn)); ?>" role="button"><i class="fa fa-edit"></i>Edit</a> <a class="btn btn-danger" onClick="return hapus_confirm()" href="<?php echo site_url('datamaster/delete_pasien/'. ency($k->kode_psn)); ?>" role="button"><i class="fa fa-remove"></i>Hapus</a>  </td>
                 </tr>
                 <?php endforeach; ?>
 
@@ -204,8 +208,6 @@ $(document).ready(function(){
   $("#add_obat").click(function(){
     $("#tampil_addobat").toggle();
   })
-
-
 
 
 })

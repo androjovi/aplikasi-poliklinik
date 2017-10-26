@@ -51,8 +51,8 @@ $this->load->view('page/template/sidebar');
             <!-- small box -->
             <div class="small-box bg-aqua">
                 <div class="inner">
-                    <h3><?php echo $total_dokter; ?></h3>
-                    <p>Total dokter</p>
+                    <h3><?php echo $total_poliklinik; ?></h3>
+                    <p>Total poliklinik</p>
                 </div>
                 <div class="icon">
                     <i class="ion ion-bag"></i>
@@ -60,7 +60,7 @@ $this->load->view('page/template/sidebar');
             </div>
         </div><!-- ./col -->
         <a id="add_obat" href="javascript::void(0)" class="btn btn-app">
-          <i class="fa fa-plus-square"></i> Tambah dokter
+          <i class="fa fa-plus-square"></i> Tambah poliklinik
         </a>
       </div>
 
@@ -76,52 +76,20 @@ $this->load->view('page/template/sidebar');
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                <form class="form-horizontal" action="<?php echo  site_url('datamaster/submit_datadokter'); ?>" method="post">
+                <form class="form-horizontal" action="<?php echo  site_url('datamaster/submit_datapoliklinik'); ?>" method="post">
                   <div class="box-body">
                     <div class="form-group">
-                      <label for="inputEmail3" class="col-sm-2 control-label">Nama dokter</label>
+                      <label for="inputEmail3" class="col-sm-2 control-label">Kode poliklinik</label>
 
                       <div class="col-sm-10">
-                        <input type="text" class="form-control"  placeholder="Nama dokter" name="nam_dokter" required="true">
+                        <input type="text" class="form-control"  placeholder="Kode poliklinik" name="kod_poli" required="true">
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="inputPassword3" class="col-sm-2 control-label">Spesialis</label>
+                      <label for="inputPassword3" class="col-sm-2 control-label">Nama poliklinik</label>
 
                       <div class="col-sm-10">
-                        <input type="Jenis obat" class="form-control"  placeholder="Spesialis" name="spesiali" required="true">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="inputPassword3" class="col-sm-2 control-label">Alamat dokter</label>
-
-                      <div class="col-sm-10">
-                        <textarea name="alamat" placeholder="Alamat..." class="form-control" required="true"></textarea>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="inputPassword3" class="col-sm-2 control-label">Telepon dokter</label>
-
-                      <div class="col-sm-10">
-                        <input type="number" class="form-control"  placeholder="No telp" name="telepo_dokter">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="inputPassword3" class="col-sm-2 control-label">Kode poliklinik</label>
-
-                      <div class="col-sm-10">
-                        <select name="kode_plk" class="form-control">
-                        <?php foreach($kode_poliklinik as $k): ?>
-                          <option value="<?php echo $k->kode_plk; ?>"><?php echo $k->kode_plk; ?></option>
-                        <?php endforeach; ?>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="inputPassword3" class="col-sm-2 control-label">Tarif</label>
-
-                      <div class="col-sm-10">
-                        <input type="number" class="form-control"  placeholder="Tarif perjam" name="tari" required="true">
+                        <input type="text" class="form-control"  placeholder="Nama poliklinik" name="nam_poli" required="true">
                       </div>
                     </div>
                   </div>
@@ -163,13 +131,8 @@ $this->load->view('page/template/sidebar');
                     <thead>
 
                     <tr>
-                      <th>Kode dokter</th>
-                      <th>Nama dokter</th>
-                      <th>Spesialis</th>
-                      <th>Alamat dokter</th>
-                      <th>Telepon dokter</th>
                       <th>Kode poliklinik</th>
-                      <th>Tarif</th>
+                      <th>Nama poliklinik</th>
                       <th>Action</th>
                     </tr>
 
@@ -177,14 +140,9 @@ $this->load->view('page/template/sidebar');
                     <tbody>
                       <?php foreach($query as $k): ?>
                     <tr id="test">
-                      <td><?php echo $k->kode_dkt; ?></td>
-                      <td><?php echo $k->nama_dkt; ?></td>
-                      <td><?php echo $k->spesialis; ?></td>
-                      <td><?php echo $k->alamat_dkt; ?></td>
-                      <td><?php echo $k->telepon_dkt; ?></td>
                       <td><?php echo $k->kode_plk; ?></td>
-                      <td><?php echo num_format($k->tarif); ?></td>
-                      <td><a class="btn btn-primary" href="<?php echo site_url('datamaster/edit_dokter/'. ency($k->kode_dkt)); ?>" role="button"><i class="fa fa-edit"></i>Edit</a> <a class="btn btn-danger" onClick="return hapus_confirm()" href="<?php echo site_url('datamaster/delete_dokter/'. ency($k->kode_dkt)); ?>" role="button"><i class="fa fa-remove"></i>Hapus</a>  </td>
+                      <td><?php echo $k->nama_plk; ?></td>
+                      <td><a class="btn btn-primary" href="<?php echo site_url('datamaster/edit_dokter/'. ency($k->kode_plk)); ?>" role="button"><i class="fa fa-edit"></i>Edit</a> <a class="btn btn-danger" onClick="return hapus_confirm()" href="<?php echo site_url('datamaster/delete_poliklinik/'. ency($k->kode_plk)); ?>" role="button"><i class="fa fa-remove"></i>Hapus</a>  </td>
                     </tr>
                     <?php endforeach; ?>
 

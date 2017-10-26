@@ -32,46 +32,51 @@ $this->load->view('page/template/sidebar');
           <!-- general form elements -->
           <div class="box box-primary">
             <div class="box-header with-border">
-              <?php foreach($get_obat as $k): ?>
-              <h3 class="box-title">Edit obat <small>&nbsp;&nbsp; <?php echo $k->kode_obat; ?></small></h3>
+              <?php foreach($get_psn as $k): ?>
+              <h3 class="box-title">Edit pasien <small>&nbsp;&nbsp; <?php echo $k->kode_psn; ?></small></h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form class="form-horizontal" action="<?php echo site_url('datamaster/submit_editoabat/'.ency($k->kode_obat)); ?>" method="post">
+            <form class="form-horizontal" action="<?php echo site_url('datamaster/submit_editpasien/'.ency($k->kode_psn)); ?>" method="post">
               <div class="box-body">
                 <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Nama obat</label>
+                  <label for="inputEmail3" class="col-sm-2 control-label">Nama pasien</label>
 
                   <div class="col-sm-10">
-                    <input type="text" name="nam_obat" class="form-control" id="inputEmail3" placeholder="Nama obat" value="<?php echo $k->nama_obat; ?>">
+                    <input type="text" name="nam_obat" class="form-control" id="inputEmail3" placeholder="Nama obat" value="<?php echo $k->nama_psn; ?>">
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Jenis obat</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">Alamat pasien</label>
 
                   <div class="col-sm-10">
-                    <input type="Jenis obat" name="jeni_obat" class="form-control" id="inputPassword3" placeholder="Jenis obat" value="<?php echo $k->jenis_obat; ?>">
+                    <textarea name="alamat" placeholder="Alamat..." class="form-control"><?php echo $k->alamat_psn; ?></textarea>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="inputPassword3" class="col-sm-2 control-label">Jenis kelamin</label>
+
+                  <div class="col-sm-10">
+                    <select name="jenis_kelamin" class="form-control">
+                      <option disabled="true">--Pilih--</option>
+                      <option value="laki-laki">Laki - laki</option>
+                      <option value="perempuan">Perempuan</option>
+                    </select>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Kategori</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">Umur</label>
 
                   <div class="col-sm-10">
-                    <input type="Kategori" name="kategor" class="form-control" id="inputPassword3" placeholder="Kategori" value="<?php echo $k->kategori; ?>">
+                    <input type="number" name="umu" class="form-control" id="inputPassword3" placeholder="Harga (dalam Rupiah)" value="<?php echo $k->umur_psn; ?>">
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Harga obat</label>
+                  <label for="inputPassword3" class="col-sm-2 control-label">No telp</label>
 
                   <div class="col-sm-10">
-                    <input type="number" name="harg_obat" class="form-control" id="inputPassword3" placeholder="Harga (dalam Rupiah)" value="<?php echo $k->harga_obat; ?>">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Jumlah obat</label>
-
-                  <div class="col-sm-10">
-                    <input type="number" name="jumla_obat" class="form-control" id="inputPassword3" placeholder="Jumlah obat" value="<?php echo $k->jumlah_obat; ?>">
+                    <input type="number" name="n_telp" class="form-control" id="inputPassword3" placeholder="Jumlah obat" value="<?php echo $k->telepon_psn; ?>">
                   <?php endforeach; ?>
                   </div>
                 </div>

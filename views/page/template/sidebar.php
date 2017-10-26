@@ -27,15 +27,26 @@
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
             <li class="treeview">
+                <a href="<?php echo site_url('dashboard'); ?>">
+                    <i class="fa fa-dashboard"></i> <span>Main menu</span>
+                </a>
+            </li>
+            <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-dashboard"></i> <span>Data master</span> <i class="fa fa-angle-left pull-right"></i>
+                    <i class="fa fa-database"></i> <span>Data master</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
                     <li><a href="<?php echo site_url('datamaster/data_obat'); ?>"><i class="fa fa-circle-o"></i> Data obat</a></li>
-                    <li><a href="<?php echo site_url('page/data_dokter/vw_datapasien'); ?>"><i class="fa fa-circle-o"></i> Data pasien</a></li>
-                    <li><a href="<?php echo site_url('page/data_dokter/'); ?>"><i class="fa fa-circle-o"></i> Data dokter</a></li>
-                    <li><a href="<?php echo site_url('dashboard2') ?>"><i class="fa fa-circle-o"></i> Data polilinik</a></li>
+                    <li><a href="<?php echo site_url('datamaster/data_pasien'); ?>"><i class="fa fa-circle-o"></i> Data pasien</a></li>
+                    <li><a href="<?php echo site_url('datamaster/data_dokter'); ?>"><i class="fa fa-circle-o"></i> Data dokter</a></li>
+                    <li><a href="<?php echo site_url('datamaster/data_poliklinik') ?>"><i class="fa fa-circle-o"></i> Data polilinik</a></li>
+                    <li><a href="<?php echo site_url('datamaster/data_pendaftar') ?>"><i class="fa fa-circle-o"></i> Data pendaftar</a></li>
                 </ul>
+            </li>
+            <li class="treeview">
+                <a href="<?php echo site_url('pembayaran'); ?>">
+                    <i class="fa fa-credit-card-alt"></i> <span>Pembayaran</span>
+                </a>
             </li>
             <li class="treeview">
                 <a href="#">
