@@ -1,4 +1,5 @@
 <?php
+ob_start();
 class Dashboard extends CI_Controller{
 
             function __construct(){
@@ -6,7 +7,12 @@ class Dashboard extends CI_Controller{
 
 
                   $this->load->model(array('model_dashboard','model_datamaster'));
-                  $this->load->library(array('pagination','form_validation'));
+                  $this->load->library(array('pagination','form_validation','session'));
+
+                      if ($this->session->userdata('userstatus') == FALSE){
+                        redirect('auth');
+                      }
+
             }
 
             function index(){
@@ -47,7 +53,7 @@ class Dashboard extends CI_Controller{
                           ref_pesan("data tidak berhasil dimasukkan","dashboard ");
                         }
                     }else{
-                      ref_pesan("Pasien tidak terdaftar","dashboard");
+                      echo ambil('kod_dokter');
                     }
                 }else{
                   // form validation
@@ -55,7 +61,7 @@ class Dashboard extends CI_Controller{
             }
 
             function find_dokter(){
-               $var=$this->input->post('get_dokter');
+               $var= ambil("get_dokter");
 
                $get=$this->model_dashboard->get_dokter($var)->result();
                foreach ($get as $k):
@@ -68,6 +74,16 @@ class Dashboard extends CI_Controller{
 
 
 
+            }
+
+            function cek_pasien(){
+              $var = ambil('get_pasien');
+              $get=$this->model_dashboard->cek_pasien_ada($var)->num_rows();
+              if ($get == 0){
+                echo 0;
+              }else{
+                echo 1;
+              }
             }
 
 

@@ -52,20 +52,19 @@ $this->load->view('page/template/sidebar');
             <!-- small box -->
             <div class="small-box bg-aqua">
                 <div class="inner">
-                    <h3><?php echo $total_pendaftar; ?></h3>
-                    <p>Total pendaftar</p>
+                    <h3><?php echo $total; ?></h3>
+                    <p>Total pasien yang anda tangani</p>
                 </div>
                 <div class="icon">
-                    <i class="ion ion-bag"></i>
+                    <i class="fa fa-heart"></i>
                 </div>
 
             </div>
 
         </div><!-- ./col -->
-              <a id="add_obat" href="<?php echo site_url('dashboard'); ?>" class="btn btn-app">
-                <i class="fa fa-plus-square"></i> Pendaftar
-              </a>
       </div>
+
+
 
     <div class="row">
       <div class="col-xs-12">
@@ -86,16 +85,14 @@ $this->load->view('page/template/sidebar');
 
 </div><!-- /.row -->
 
-              <table id="example1" class="table table-bordered table-striped">
+              <table id="example1" class="table table-bordered table-striped table-responsive">
                 <thead>
 
                 <tr>
-                  <th>No pendaftaran</th>
+                  <th>Nomor daftar</th>
                   <th>Tanggal daftar</th>
-                  <th>Kode dokter</th>
                   <th>Kode pasien</th>
-                  <th>Kode poliklinik</th>
-                  <th>Biaya</th>
+                  <th>Nama pasien</th>
                   <th>Keterangan</th>
                   <th>Action</th>
                 </tr>
@@ -106,12 +103,14 @@ $this->load->view('page/template/sidebar');
                 <tr id="test">
                   <td><?php echo $k->nomor_pdf; ?></td>
                   <td><?php echo $k->tanggal_pdf; ?></td>
-                  <td><?php echo $k->kode_dkt." -- ".$k->nama_dkt; ?></td>
-                  <td><?php echo $k->kode_psn." -- ".$k->nama_psn; ?></td>
-                  <td><?php echo $k->kode_plk; ?></td>
-                  <td><?php echo num_format($k->biaya); ?></td>
-                  <td><?php echo $k->alamat_psn; ?></td>
-                  <td><a class="btn btn-primary" href="<?php echo site_url('datamaster/info_pendaftar/'. ency($k->nomor_pdf)); ?>" role="button"><i class="fa fa-edit"></i>More info</a> <a class="btn btn-danger" onClick="return hapus_confirm()" href="<?php echo site_url('datamaster/delete_pendaftar/'. ency($k->nomor_pdf)); ?>" role="button"><i class="fa fa-remove"></i>Hapus</a>  </td>
+                  <td><?php echo $k->kode_psn; ?></td>
+                  <td><?php echo $k->nama_psn; ?></td>
+                  <td><?php echo $k->ket; ?></td>
+                  <td><a class="btn btn-warning" href="<?php echo site_url('dokter/obat/'. ency($k->kode_psn)); ?>" role="button"><i class="fa fa-child"></i>Berikan obat</a>
+                      <a class="btn btn-danger" onClick="return hapus_confirm()" href="<?php echo site_url("datamaster/delete_pendaftar/". ency($k->kode_psn)); ?>" role="button"><i class="fa fa-remove"></i>Hapus</a>&nbsp;
+                      <a class="btn btn-primary" href="<?php echo site_url('datamaster/edit_pasien/'. ency($k->kode_psn)); ?>" role="button"><i class="fa fa-edit"></i>Edit</a>
+                      <a class="btn btn-info" href="<?php echo site_url('datamaster/edit_pasien/'. ency($k->kode_psn)); ?>" role="button"><i class="fa fa-cubes"></i>More</a>
+                  </td>
                 </tr>
                 <?php endforeach; ?>
 

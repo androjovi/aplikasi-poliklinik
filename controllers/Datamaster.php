@@ -288,7 +288,7 @@ class Datamaster extends CI_Controller{
 
               $total_rows=$this->model_datamaster->read_dokter(NULL)->num_rows();
 
-              $config['base_url']=base_url()."dashboard/data_obat";
+              $config['base_url']=base_url()."dashboard/data_dokter";
               $config['total_rows']=$total_rows;
               $config['per_page']=15;
               $config['first_page']='Awal';
@@ -327,6 +327,23 @@ class Datamaster extends CI_Controller{
               $data['kode_poliklinik'] = $this->model_datamaster->get_poliklinik()->result();
               $this->load->view('page/data_dokter/vw_datadokter',$data);
             }
+            private function randomuser($user){
+              $karakter = strtolower(substr($user,0,5));
+              return $karakter;
+            }
+
+            private function randompass($pass){
+              $karakter = "abcdefg1234567890";
+              $string = '';
+              $panjang = 7;
+              $pasx = strtolower(substr($pass,0,3));
+              for ($i=0; $i<$panjang; $i++){
+                $pos = rand(0,strlen($karakter)-1);
+                $string .=$karakter{$pos};
+              }
+              return $pasx.$string;
+            }
+            
 
             function submit_datadokter(){
               $this->form_validation->set_rules('nam_dokter','Nama dokter','trim');
@@ -335,7 +352,7 @@ class Datamaster extends CI_Controller{
               $this->form_validation->set_rules('telepo_dokter','No telepon','trim');
               $this->form_validation->set_rules('kode_plk','Kode poliklinik','trim');
               $this->form_validation->set_rules('tari','Tarif','trim');
-
+              $r= $this->randompass(ambil('nam_dokter'));
               if ($this->form_validation->run()){
                   $data=array(
                     'kode_dkt'     => uniqid(),
@@ -345,10 +362,16 @@ class Datamaster extends CI_Controller{
                     'telepon_dkt'  => ambil('telepo_dokter'),
                     'kode_plk'     => ambil('kode_plk'),
                     'tarif'        => ambil('tari'),
+                    'username'     => $this->randomuser(ambil('nam_dokter')),
+                    'password'     => hash_pass($r),
                   );
 
                     if ($this->model_datamaster->insert_dokter($data)){
-                      ref_pesan("Berhasil ditambahkan","datamaster/data_dokter");
+                      echo "
+                        Username = ".$this->randomuser(ambil('nam_dokter'))."<br>
+                        Password = ".$r."<br><br>
+                        <a href='".site_url('datamaster/data_dokter')."'>Kembali</a>
+                      ";
                     }
               }else{
                 ref_pesan("Kesalahan","datamaster/data_dokter");
@@ -393,7 +416,7 @@ class Datamaster extends CI_Controller{
 
               $total_rows=$this->model_datamaster->read_poliklinik(NULL)->num_rows();
 
-              $config['base_url']=base_url()."dashboard/data_obat";
+              $config['base_url']=base_url()."dashboard/data_poliklinik";
               $config['total_rows']=$total_rows;
               $config['per_page']=15;
               $config['first_page']='Awal';
@@ -457,7 +480,7 @@ class Datamaster extends CI_Controller{
 
               $total_rows=$this->model_datamaster->read_pendaftar(NULL)->num_rows();
 
-              $config['base_url']=base_url()."dashboard/data_obat";
+              $config['base_url']=base_url()."dashboard/data_pendaftar";
               $config['total_rows']=$total_rows;
               $config['per_page']=15;
               $config['first_page']='Awal';
@@ -494,5 +517,19 @@ class Datamaster extends CI_Controller{
               $data['query']=$this->model_datamaster->read_pendaftar_all($config['per_page'],$id)->result();
 
               $this->load->view('page/data_pendaftar/vw_datapendaftar',$data);
+            }
+
+            function delete_pendaftar($kode){
+
+                if ( $this->model_datamaster->del_pendaftar($kode)){
+                  ref_pesan("Berhasil dihapus","datamaster/data_pendaftar");
+                }else{
+                  //
+                }
+            }
+
+            function info_pendaftar($kode){
+              $data['query'] = $this->model_datamaster->read_pendaftar_where(decr($kode))->result();
+              $this->load->view('page/data_pendaftar/vw_infopendaftar',$data);
             }
 }

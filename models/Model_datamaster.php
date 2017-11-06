@@ -91,6 +91,18 @@ class Model_datamaster extends CI_Model{
   function read_pendaftar(){
     return $this->db->get('pendaftaran');
   }
+  function read_pendaftar_where($where){
+    $this->db->select('*');
+    $this->db->from('pendaftaran');
+    $this->db->join('pasien','pasien.kode_psn = pendaftaran.kode_psn');
+    $this->db->join('dokter','dokter.kode_dkt = pendaftaran.kode_dkt');
+    $this->db->where('pendaftaran.nomor_pdf',$where);
+    return $this->db->get();
+  }
+  function del_pendaftar($where){
+    $this->db->where('nomor_pdf',decr($where));
+    return $this->db->delete('pendaftaran');
+  }
 
   // -------- Random
   function get_poliklinik(){

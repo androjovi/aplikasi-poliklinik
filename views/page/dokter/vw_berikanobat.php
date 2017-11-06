@@ -48,39 +48,64 @@ $this->load->view('page/template/sidebar');
 <section class="content">
     <!-- Small boxes (Stat box) -->
     <div class="row">
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-aqua">
-                <div class="inner">
-                    <h3><?php echo $total_pendaftar; ?></h3>
-                    <p>Total pendaftar</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-bag"></i>
-                </div>
-
-            </div>
-
-        </div><!-- ./col -->
-              <a id="add_obat" href="<?php echo site_url('dashboard'); ?>" class="btn btn-app">
-                <i class="fa fa-plus-square"></i> Pendaftar
-              </a>
-      </div>
-
-    <div class="row">
       <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Data Table Obat</h3>
+              <h3 class="box-title">Data Table Obat <small>Cari berdasarkan kode obat, nama obat, jenis obat atau kategori obat</small></h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+              <script>
+              function find_obat(){
+                var obat = $("#val_search").val();
+
+                $.ajax({
+                  type : "post",
+                  dataType : "json",
+                  url : "<?php echo site_url('dokter/cari_dataobat') ?>",
+                  data : {search_obat : obat},
+                  success:function(data){
+                    $.each(data,function(i,n){
+                    $("#vw_obat").append(
+                      '<tr><td>'+n.kode_obat+'</td> <td>'+n.nama_obat+'</td> <td>'+n.jenis_obat+'</td> <td>'+n.kategori+'</td> <td>'+n.harga_obat+'</td> <td>'+n.jumlah_obat+'</td> <td><a id="cek_stok" data-value = '+n.kode_obat+' onClick="cek_stokobat()" href="javascript:void(0)">Cek stok</a></td></tr>'
+                    );
+                  });
+                  }
+                })
+                $("#vw_obat").empty();
+
+              }
+              function cek_stokobat(){
+                var cek_stok = $("#cek_stok").attr("data-value");
+              $.ajax({
+                type : "post",
+                dataType : "json",
+                url : "<?php echo site_url('dokter/cek_stokobat') ?>",
+                data : {kode_obat : cek_stok},
+                success:function(data){
+                  $.each(data,function(i,n){
+                    if (n.jumlah_obat === 0){
+                      $("#cek_stok").text(
+                        "<p class='text-red'>Stok sedang habis</p>"
+                      )
+                    }else{
+                      $("#cek_stok").html(
+                        "<a href='<?php echo site_url(); ?>dokter/add_obat/"+n.kode_obat+"' class='btn btn-primary' role='button'>Tersedia</a>"
+                      )
+                    }
+                });
+                }
+              })
+
+              }
+
+              </script>
     <div class="input-group">
-      <form action="<?php echo site_url('datamaster/cari_dataobat'); ?>" method="post" id="form">
-      <input id="val_search" type="text" class="form-control" placeholder="Search for...">
+
+      <input id="val_search" type="text" class="form-control" placeholder="Cari berdasarkan kode obat, nama obat, jenis obat dan kategori obat" required>
       <span class="input-group-btn">
-        <button id="search" class="btn btn-default" type="button">Go!</button>
-      </form>
+        <button id="search" class="btn btn-default" type="button" onClick="find_obat()" >Find..</button>
+
       </span>
     </div><!-- /input-group -->
 
@@ -90,33 +115,20 @@ $this->load->view('page/template/sidebar');
                 <thead>
 
                 <tr>
-                  <th>No pendaftaran</th>
-                  <th>Tanggal daftar</th>
-                  <th>Kode dokter</th>
-                  <th>Kode pasien</th>
-                  <th>Kode poliklinik</th>
-                  <th>Biaya</th>
-                  <th>Keterangan</th>
+                  <th>Kode obat</th>
+                  <th>Nama obat</th>
+                  <th>Jenis obat</th>
+                  <th>Kategori</th>
+                  <th>Harga obat</th>
+                  <th>Jumlah obat</th>
                   <th>Action</th>
                 </tr>
 
                 </thead>
-                <tbody>
-                  <?php foreach($query as $k): ?>
-                <tr id="test">
-                  <td><?php echo $k->nomor_pdf; ?></td>
-                  <td><?php echo $k->tanggal_pdf; ?></td>
-                  <td><?php echo $k->kode_dkt." -- ".$k->nama_dkt; ?></td>
-                  <td><?php echo $k->kode_psn." -- ".$k->nama_psn; ?></td>
-                  <td><?php echo $k->kode_plk; ?></td>
-                  <td><?php echo num_format($k->biaya); ?></td>
-                  <td><?php echo $k->alamat_psn; ?></td>
-                  <td><a class="btn btn-primary" href="<?php echo site_url('datamaster/info_pendaftar/'. ency($k->nomor_pdf)); ?>" role="button"><i class="fa fa-edit"></i>More info</a> <a class="btn btn-danger" onClick="return hapus_confirm()" href="<?php echo site_url('datamaster/delete_pendaftar/'. ency($k->nomor_pdf)); ?>" role="button"><i class="fa fa-remove"></i>Hapus</a>  </td>
-                </tr>
-                <?php endforeach; ?>
+                <tbody id="vw_obat" >
 
               </tbody>
-              <?php echo $halaman; ?>
+
               </table>
             </div>
             <!-- /.box-body -->

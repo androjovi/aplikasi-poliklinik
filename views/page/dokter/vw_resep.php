@@ -31,65 +31,34 @@ $this->load->view('page/template/sidebar');
         <div class="col-md-12">
           <!-- general form elements -->
           <div class="box box-primary">
-            <div class="box-header with-border">
-              <?php foreach($get_psn as $k): ?>
-              <h3 class="box-title">Edit pasien <small>&nbsp;&nbsp; <?php echo $k->kode_psn; ?></small></h3>
+            <div class="box-body">
+              <?php foreach($this->cart->contents() as $items): ?>
+                          <form role="form" action="<?php echo site_url('dokter/proses_obat/'.$items['id']); ?>" method="post">
+            <div class="form-group">
+              <i><p class="">Nomor resep : </p></i>
+              <i><p>Tanggal : <?php echo date('d-m-Y'); ?></p></i>
+                  <label>Resep</label>
+                  <p>Nama obat : <?php echo $items['name']; ?></p>
+                  <p>Jenis obat : <?php echo $items['jenis_obat']; ?></p>
+                  <p>Kategori : <?php echo $items['kategori'] ?></p>
+
+                  <textarea class="form-control" name="resep_lengkap" rows="6" placeholder="Masukkan resep..." required="true"></textarea>
+                  <br>
+                  Dosis : <input class="form-control" type="text" name="dosis" placeholder="Masukkan dosis obat">
             </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            <form class="form-horizontal" action="<?php echo site_url('datamaster/submit_editpasien/'.ency($k->kode_psn)); ?>" method="post">
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Nama pasien</label>
+            <?php endforeach; ?>
 
-                  <div class="col-sm-10">
-                    <input type="text" name="nam_obat" class="form-control" id="inputEmail3" placeholder="Nama obat" value="<?php echo $k->nama_psn; ?>" required="true">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Alamat pasien</label>
 
-                  <div class="col-sm-10">
-                    <textarea name="alamat" required="true" placeholder="Alamat..." class="form-control"><?php echo $k->alamat_psn; ?></textarea>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Jenis kelamin</label>
-
-                  <div class="col-sm-10">
-                    <select name="jenis_kelamin" class="form-control" required="true">
-                      <option disabled="true">--Pilih--</option>
-                      <option value="laki-laki">Laki - laki</option>
-                      <option value="perempuan">Perempuan</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Umur</label>
-
-                  <div class="col-sm-10">
-                    <input type="number" name="umu" required="true" class="form-control" id="inputPassword3" placeholder="Harga (dalam Rupiah)" value="<?php echo $k->umur_psn; ?>">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">No telp</label>
-
-                  <div class="col-sm-10">
-                    <input type="number" required="true" name="n_telp" class="form-control" id="inputPassword3" placeholder="Jumlah obat" value="<?php echo $k->telepon_psn; ?>">
-                  <?php endforeach; ?>
-                  </div>
-                </div>
+            <div class="box-footer">
+                <a href="<?php echo site_url('dokter/remove_obat'); ?>" class="btn btn-danger">Cancel</a>
+                <button type="reset" class="btn btn-default">Hapus</button>
+                <button type="submit" class="btn btn-info pull-right">Sign in</button>
               </div>
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <button type="reset" class="btn btn-default">Reset</button>
-              </div>
-            </form>
           </div>
           <!-- /.box -->
         </div>
       </div>
+    </div>
 
 
 

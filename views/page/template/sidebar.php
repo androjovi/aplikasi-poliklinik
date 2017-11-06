@@ -8,7 +8,7 @@
                 <img src="<?php echo base_url('assets/AdminLTE-2.0.5/dist/img/user2-160x160.jpg') ?>" class="img-circle" alt="User Image" />
             </div>
             <div class="pull-left info">
-                <p>Alexander Pierce</p>
+                <p><?php echo $this->session->userdata('nameuser'); ?></p>
 
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
@@ -57,6 +57,16 @@
                     <li><a href="<?php echo site_url('dashboard2') ?>"><i class="fa fa-circle-o"></i> Data obat</a></li>
                     <li><a href="<?php echo site_url('dashboard2') ?>"><i class="fa fa-circle-o"></i> Data dokter</a></li>
                 </ul>
+            </li>
+            <li class="treeview">
+                <a href="<?php echo site_url('dokter'); ?>">
+                    <i class="fa fa-dashboard"></i> <span>Dokter</span>
+                </a>
+            </li>
+            <li class="treeview">
+                <a href="<?php echo site_url('auth/logout'); ?>">
+                    <i class="fa fa-dashboard"></i> <span>Logout</span>
+                </a>
             </li>
 
     </section>

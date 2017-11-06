@@ -18,6 +18,10 @@ class Model_dashboard extends CI_Model{
     $this->db->where('kode_plk',$where);
     return $this->db->get('dokter');
   }
+  function cek_pasien_ada($where){
+    $this->db->where('kode_psn',$where);
+    return $this->db->get('pasien');
+  }
 
 
 

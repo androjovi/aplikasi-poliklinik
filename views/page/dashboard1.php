@@ -107,6 +107,7 @@ $this->load->view('page/template/sidebar');
             <!-- form start -->
 
             <script>
+
                function get_dokter() {
                 var dokter= $("#kode_dokter").val();
                 $.ajax({
@@ -123,6 +124,27 @@ $this->load->view('page/template/sidebar');
                   }
                 })
                 $("#view_dokter").empty();
+              }
+
+              function cek_pasien(){
+                var pasien = $("#kode_pasien").val();
+                $.ajax({
+                  type: "POST",
+                  url : "<?php echo site_url('dashboard/cek_pasien'); ?>",
+                  data :  {get_pasien : pasien},
+                  success :function(data){
+                    if (data == 0){
+                      $("#pesan").html("Pasien tidak terdaftar harap daftar dahulu");
+                      $("#submit").attr("disabled","true");
+                      $("#pesan").addClass("alert alert-danger");
+                      $("#pesan").removeClass("alert-success");
+                    }else{
+                      $("#pesan").html("Pasien telah terdaftar");
+                      $("#submit").removeAttr("disabled");
+                      $("#pesan").addClass("alert alert-success");
+                    }
+                  }
+                })
               }
 
 
@@ -146,10 +168,10 @@ $this->load->view('page/template/sidebar');
                   <label for="inputEmail3" class="col-sm-2 control-label">Nomor pendaftar</label>
 
                   <div class="col-sm-10">
+                    <input type="text"  class="form-control" value=""  placeholder="Nomor pendaftar" name="nom_pendaftar" required="true"></span>
 
-                    <input type="text" readonly class="form-control" value=""  placeholder="Nomor pendaftar" name="nom_pendaftar" required="true">
                     <span class="input-group-btn">
-                      <button type="button" class="btn btn-info btn-flat" onClick="random_all()">Generate</button>
+                      <button type="button" class="btn btn-info btn-flat" onClick="random_all()">Generate!</button>
                     </span>
                   </div>
                 </div>
@@ -175,8 +197,8 @@ $this->load->view('page/template/sidebar');
                   <label for="inputEmail3" class="col-sm-2 control-label">Kode dokter</label>
 
                   <div class="col-sm-10">
-                    <select name="kode_dokter" class="form-control" id="view_dokter">
-
+                    <select name="kod_dokter" class="form-control" id="view_dokter">
+                      <option>--Pilih dokter--</option>
                     </select>
                   </div>
                 </div>
@@ -184,12 +206,11 @@ $this->load->view('page/template/sidebar');
                   <label for="inputEmail3" class="col-sm-2 control-label">Kode pasien</label>
 
                   <div class="col-sm-10">
-                    <input type="text" class="form-control"  placeholder="Kode pasien" name="kod_pasien" required="true">
-                    <div >
-                      <label>
-                        <input type="checkbox">
-                        Apakah pasien baru ?
-                      </label>
+
+                    <input type="text" class="form-control" id="kode_pasien" onClick="cek_pasien()"  placeholder="Kode pasien" name="kod_pasien" required="true">
+                    <br>
+                    <div id="pesan" role="alert" >
+
                     </div>
                   </div>
                 </div>
@@ -203,16 +224,16 @@ $this->load->view('page/template/sidebar');
                 </div>
 
               <div class="form-group">
-                <label for="inputPassword3" class="col-sm-2 control-label">Biaya</label>
+                <label for="inputPassword3" class="col-sm-2 control-label">Biaya admin</label>
 
                 <div class="col-sm-10">
-                  <input type="number" class="form-control"  placeholder="Dalam rupiah" name="biay" required="true">
+                  <input type="number" class="form-control" value="5000"  placeholder="Dalam rupiah" name="biay" required="true">
                 </div>
               </div>
             </div>
 
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" id="submit" class="btn btn-primary">Submit</button>
                 <button type="reset" class="btn btn-default">Reset</button>
 
               </div>

@@ -31,65 +31,26 @@ $this->load->view('page/template/sidebar');
         <div class="col-md-12">
           <!-- general form elements -->
           <div class="box box-primary">
-            <div class="box-header with-border">
-              <?php foreach($get_psn as $k): ?>
-              <h3 class="box-title">Edit pasien <small>&nbsp;&nbsp; <?php echo $k->kode_psn; ?></small></h3>
-            </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-            <form class="form-horizontal" action="<?php echo site_url('datamaster/submit_editpasien/'.ency($k->kode_psn)); ?>" method="post">
-              <div class="box-body">
-                <div class="form-group">
-                  <label for="inputEmail3" class="col-sm-2 control-label">Nama pasien</label>
+            <div class="box-body">
+              <?php foreach($this->cart->contents() as $items): ?>
+              <p>Total harga : <?php echo $items['price']; ?></p>
+              <p>Qty : <?php echo $items['qty']; ?></p>
+              <p>Nama obat : <?php echo $items['name']; ?></p>
+            <?php endforeach; ?>
+            <p>Kode resep :  <?php echo $this->session->flashdata('kode_resep'); ?> <i>copy</i></p>
+            <form action="<?php echo site_url('dokter/bayar_langsung/'.$this->session->flashdata('kode_resep')) ?>" method="post">
+              <br>
+            Jumlah uang : <input class="form-control" type="number" name="jumlah_uang" placeholder="Masukkan uang yang diberikan">
+            <br>
+            <button class = "btn btn-primary" role="button">Bayar sekarang</button>
+            <a class = "btn btn-info" role="button">Bayar nanti</a>
+          </form>
 
-                  <div class="col-sm-10">
-                    <input type="text" name="nam_obat" class="form-control" id="inputEmail3" placeholder="Nama obat" value="<?php echo $k->nama_psn; ?>" required="true">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Alamat pasien</label>
-
-                  <div class="col-sm-10">
-                    <textarea name="alamat" required="true" placeholder="Alamat..." class="form-control"><?php echo $k->alamat_psn; ?></textarea>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Jenis kelamin</label>
-
-                  <div class="col-sm-10">
-                    <select name="jenis_kelamin" class="form-control" required="true">
-                      <option disabled="true">--Pilih--</option>
-                      <option value="laki-laki">Laki - laki</option>
-                      <option value="perempuan">Perempuan</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">Umur</label>
-
-                  <div class="col-sm-10">
-                    <input type="number" name="umu" required="true" class="form-control" id="inputPassword3" placeholder="Harga (dalam Rupiah)" value="<?php echo $k->umur_psn; ?>">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="inputPassword3" class="col-sm-2 control-label">No telp</label>
-
-                  <div class="col-sm-10">
-                    <input type="number" required="true" name="n_telp" class="form-control" id="inputPassword3" placeholder="Jumlah obat" value="<?php echo $k->telepon_psn; ?>">
-                  <?php endforeach; ?>
-                  </div>
-                </div>
-              </div>
-              <div class="box-footer">
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <button type="reset" class="btn btn-default">Reset</button>
-              </div>
-            </form>
           </div>
           <!-- /.box -->
         </div>
       </div>
+    </div>
 
 
 

@@ -15,137 +15,120 @@ $this->load->view('page/template/head');
 <link href="<?php echo base_url('assets/AdminLTE-2.0.5/plugins/daterangepicker/daterangepicker-bs3.css') ?>" rel="stylesheet" type="text/css" />
 <!-- bootstrap wysihtml5 - text editor -->
 <link href="<?php echo base_url('assets/AdminLTE-2.0.5/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') ?>" rel="stylesheet" type="text/css" />
-<script>
-function hapus_confirm(){
-  var msg;
-  msg= "Apakah Anda Yakin Akan Menghapus Data ? " ;
-  var agree=confirm(msg);
-  if (agree)
-  return true ;
-  else
-  return false ;
-}
-</script>
+
 <?php
 $this->load->view('page/template/topbar');
 $this->load->view('page/template/sidebar');
 ?>
 
 <!-- Content Header (Page header) -->
-
 <section class="content-header">
-    <h1>
-        Dashboard
-        <small>Control panel</small>
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
-    </ol>
-</section>
+  <h1>
+    <?php foreach($query as $k): ?>
+      Info
+      <small><?php echo $k->nomor_pdf; ?></small>
+  </h1>
+  <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li class="active">info</li>
+  </ol>
 
+</section>
 <!-- Main content -->
 <section class="content">
     <!-- Small boxes (Stat box) -->
     <div class="row">
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-aqua">
-                <div class="inner">
-                    <h3><?php echo $total_pendaftar; ?></h3>
-                    <p>Total pendaftar</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-bag"></i>
-                </div>
+        <!-- left column -->
+        <div class="col-md-12">
+          <!-- general form elements -->
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <i class="fa fa-mouse-pointer"></i>
 
-            </div>
-
-        </div><!-- ./col -->
-              <a id="add_obat" href="<?php echo site_url('dashboard'); ?>" class="btn btn-app">
-                <i class="fa fa-plus-square"></i> Pendaftar
-              </a>
-      </div>
-
-    <div class="row">
-      <div class="col-xs-12">
-        <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Data Table Obat</h3>
+              <h3 class="box-title">Info pendaftaran</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-    <div class="input-group">
-      <form action="<?php echo site_url('datamaster/cari_dataobat'); ?>" method="post" id="form">
-      <input id="val_search" type="text" class="form-control" placeholder="Search for...">
-      <span class="input-group-btn">
-        <button id="search" class="btn btn-default" type="button">Go!</button>
-      </form>
-      </span>
-    </div><!-- /input-group -->
+              <dl class="dl-horizontal">
+                <dt>Nomor pendaftaran</dt>
+                <dd><?php echo $k->nomor_pdf; ?></dd>
+                <dt>Tanggal pendaftaran</dt>
+                <dd><?php echo $k->tanggal_pdf; ?></dd>
+                <dt>Dokter yang menangani</dt>
+                <dd><?php echo $k->nama_dkt; ?></dd>
+                <dt>Poliklinik terdaftar</dt>
+                <dd><?php echo $k->kode_plk; ?></dd>
+              </dl>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
 
-</div><!-- /.row -->
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <i class="fa fa-heart"></i>
 
-              <table id="example1" class="table table-bordered table-striped">
-                <thead>
+              <h3 class="box-title">Tentang pasien yang satu ini</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <dl class="dl-horizontal">
+                <dt>Kode pasien</dt>
+                <dd><?php echo $k->kode_psn; ?></dd>
+                <dt>Nama pasien</dt>
+                <dd><?php echo $k->nama_psn; ?></dd>
+                <dt>Alamat pasien</dt>
+                <dd><?php echo $k->alamat_psn; ?></dd>
+                <dt>Gender</dt>
+                <dd><?php echo $k->gender_psn; ?></dd>
+                <dt>Umur</dt>
+                <dd><?php echo $k->umur_psn; ?></dd>
+                <dt>No telp</dt>
+                <dd><?php echo $k->telepon_psn; ?></dd>
+              </dl>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
 
-                <tr>
-                  <th>No pendaftaran</th>
-                  <th>Tanggal daftar</th>
-                  <th>Kode dokter</th>
-                  <th>Kode pasien</th>
-                  <th>Kode poliklinik</th>
-                  <th>Biaya</th>
-                  <th>Keterangan</th>
-                  <th>Action</th>
-                </tr>
+          <div class="box box-solid">
+            <div class="box-header with-border">
+              <i class="fa fa-user-md"></i>
 
-                </thead>
-                <tbody>
-                  <?php foreach($query as $k): ?>
-                <tr id="test">
-                  <td><?php echo $k->nomor_pdf; ?></td>
-                  <td><?php echo $k->tanggal_pdf; ?></td>
-                  <td><?php echo $k->kode_dkt." -- ".$k->nama_dkt; ?></td>
-                  <td><?php echo $k->kode_psn." -- ".$k->nama_psn; ?></td>
-                  <td><?php echo $k->kode_plk; ?></td>
-                  <td><?php echo num_format($k->biaya); ?></td>
-                  <td><?php echo $k->alamat_psn; ?></td>
-                  <td><a class="btn btn-primary" href="<?php echo site_url('datamaster/info_pendaftar/'. ency($k->nomor_pdf)); ?>" role="button"><i class="fa fa-edit"></i>More info</a> <a class="btn btn-danger" onClick="return hapus_confirm()" href="<?php echo site_url('datamaster/delete_pendaftar/'. ency($k->nomor_pdf)); ?>" role="button"><i class="fa fa-remove"></i>Hapus</a>  </td>
-                </tr>
-                <?php endforeach; ?>
-
-              </tbody>
-              <?php echo $halaman; ?>
-              </table>
+              <h3 class="box-title">Tentang dokter yang satu ini</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+              <dl class="dl-horizontal">
+                <dt>Kode dokter</dt>
+                <dd><?php echo $k->kode_dkt; ?></dd>
+                <dt>Nama dokter</dt>
+                <dd><?php echo $k->nama_dkt; ?></dd>
+                <dt>Spesialis</dt>
+                <dd><?php echo $k->spesialis; ?></dd>
+                <dt>Alamat dokter</dt>
+                <dd><?php echo $k->alamat_dkt; ?></dd>
+                <dt>Telepon dokter</dt>
+                <dd><?php echo $k->telepon_dkt; ?></dd>
+                <dt>Kode poliklinik</dt>
+                <dd><?php echo $k->kode_plk; ?></dd>
+                <dt>Tarif</dt>
+                <dd><?php echo num_format($k->tarif); ?>, Belum termasuk Ppn</dd>
+              </dl>
             </div>
             <!-- /.box-body -->
           </div>
           <!-- /.box -->
         </div>
-        <!-- /.col -->
+        <!-- ./col -->
+
+        </div>
       </div>
-      <!-- /.row -->
+<?php endforeach; ?>
+
 
 </section><!-- /.content -->
 
-
-
-<?php
-$this->load->view('page/template/js');
-?>
-
-<!--tambahkan custom js disini-->
-<!-- jQuery UI 1.11.2 -->
-<script>
-$(document).ready(function(){
-  $("#add_obat").click(function(){
-    $("#tampil_addobat").toggle();
-  })
-
-
-})
-</script>
 <script src="<?php echo base_url('assets/js/jquery-ui.min.js') ?>" type="text/javascript"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
