@@ -15,8 +15,26 @@
                     <span class="icon-bar"></span>
                 </a>
                 <div class="navbar-custom-menu">
+                    
                     <ul class="nav navbar-nav">
                         <!-- Messages: style can be found in dropdown.less-->
+                        
+                        <li class="pull-left dropdown messages-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                Memory usage {memory_usage}
+                                <span class="label label-success"></span>
+                            </a>
+                            
+                        </li>
+                        
+                        <li class="pull-left dropdown messages-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                Load time {elapsed_time}
+                                <span class="label label-success"></span>
+                            </a>
+                            
+                        </li>
+                        
                         <li class="dropdown messages-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-envelope-o"></i>
@@ -100,14 +118,14 @@
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="<?php echo base_url('assets/AdminLTE-2.0.5/dist/img/user2-160x160.jpg') ?>" class="user-image" alt="User Image"/>
-                                <span class="hidden-xs"><?php echo $this->session->userdata('namedokter'); ?></span>
+                                <span class="hidden-xs"><?php echo $this->session->userdata('fullname'); ?></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header">
                                     <img src="<?php echo base_url('assets/AdminLTE-2.0.5/dist/img/user2-160x160.jpg') ?>" class="img-circle" alt="User Image" />
                                     <p>
-                                        <?php echo $this->session->userdata('namedokter'); ?>
+                                        <?php echo $this->session->userdata('fullname'); ?>
                                         <small>Member since Nov. 2012</small>
                                     </p>
                                 </li>

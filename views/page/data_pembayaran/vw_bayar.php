@@ -36,7 +36,7 @@ $this->load->view('page/template/sidebar');
 <section class="content-header">
     <h1>
         Pembayaran
-        <?php foreach($query as $k): ?>
+        <?php foreach($query as $k): $psn = $k->kode_psn; ?>
         <small><?php echo $k->nomor_pdf; ?></small>
     </h1>
     <ol class="breadcrumb">
@@ -63,6 +63,7 @@ $this->load->view('page/template/sidebar');
       <div class="col-sm-4 invoice-col">
         Data pasien
         <address>
+            <?php $kode_psn = $k->kode_psn; ?>
           <strong><?php echo $k->nama_psn; ?></strong><br>
           Gender : <?php echo $k->gender_psn; ?><br>
           Alamat: <?php echo $k->alamat_psn; ?><br>
@@ -85,7 +86,7 @@ $this->load->view('page/template/sidebar');
       <div class="col-sm-4 invoice-col">
         <b>No pendaftaran : <?php echo $k->nomor_pdf; ?></b><br>
         <br>
-        <b>Nomor bayar:</b> 4F3S8J<br>
+        <b>Nomor bayar:</b> <br>
         <b>Tanggal daftar:</b> <?php echo $k->tanggal_pdf ?><br>
         <b>Petugas:</b> 968-34567
       </div>
@@ -107,74 +108,85 @@ $this->load->view('page/template/sidebar');
           </tr>
           </thead>
           <tbody>
-          <tr>
-            <td>1</td>
-            <td>Call of Duty</td>
-            <td>455-981-221</td>
-            <td>El snort testosterone trophy driving gloves handsome</td>
-            <td>$64.50</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>Need for Speed IV</td>
-            <td>247-925-726</td>
-            <td>Wes Anderson umami biodiesel</td>
-            <td>$50.00</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>Monsters DVD</td>
-            <td>735-845-642</td>
-            <td>Terry Richardson helvetica tousled street art master</td>
-            <td>$10.70</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>Grown Ups Blue Ray</td>
-            <td>422-568-642</td>
-            <td>Tousled lomo letterpress</td>
-            <td>$25.99</td>
-          </tr>
+              <?php foreach ( $query2 as $k): $nmr = $k->nomor_resep; ?>
+              <tr>
+                <td><?php echo $k->qty; ?></td>
+                <td></td>
+                <td><?php echo $k->nomor_resep; ?></td>
+                <td><?php echo $k->detail_resep; ?></td>
+                <td><?php echo num_format($k->sub_total); ?></td>
+              </tr>
+              <?php $total = $k->total_harga; ?>
+              <?php endforeach; ?>
           </tbody>
+            
         </table>
       </div>
       <!-- /.col -->
     </div>
     <!-- /.row -->
-
     <div class="row">
       <!-- accepted payments column -->
       <div class="col-xs-6">
 
 
         <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            
+            <input type="text" placeholder="Masukkan nomor kartu berobat"  onchange="alert('Anda mendapatkan diskon 30%')" style="width:100%" class="form-control">
         </p>
+          
       </div>
       <!-- /.col -->
       <div class="col-xs-6">
-        <p class="lead">Amount Due 2/22/2014</p>
+        <p class="lead" >Tanggal <?php echo date('D, d-m-Y'); ?></p>
 
         <div class="table-responsive">
-          <table class="table">
+          <table class="table"> 
             <tr>
               <th style="width:50%">Subtotal:</th>
-              <td>$250.30</td>
+                
+              <td><?php echo num_format($totalharga); ?></td>
             </tr>
             <tr>
-              <th>Tax (9.3%)</th>
-              <td>$10.34</td>
+              <th>Diskon</th>
+              <td></td>
             </tr>
             <tr>
-              <th>Shipping:</th>
-              <td>$5.80</td>
+              <th>Total bayar</th>
+              <td><?php num_format($totalharga); ?></td>
             </tr>
+              <script>
+                  
+                function hitung_kembali(){
+                    var moneyFormat = wNumb({
+                        mark: ',',
+                        decimals: 0,
+                        thousand: '.',
+                        prefix: 'Rp. ',
+                        suffix: ''
+                    });
+                    var total = <?php echo $totalharga; ?>;
+                    var bayar = $("#bayar").val();
+                    var kembali = bayar-total;
+                    $("#kembalian").val(moneyFormat.to(kembali));  
+                    $("#goback").val(kembali);
+                    
+                }
+              </script>
+              <form action="<?php echo site_url("pembayaran/struk/$psn/$nmr"); ?>" method="post">
+                  <input type="text" name="kembalian_s" value="" id="goback">
             <tr>
-              <th>Total:</th>
-              <td>$265.24</td>
+              <th>Bayar : </th>
+              <td><input type="text" name="jumlah_bayar" class="form-control" placeholder="Total bayar" id="bayar"> <span class="input-group-btn"><button type="button" class="btn btn-info btn-flat" onclick="hitung_kembali()">Hitung kembalian</button></span></td>
             </tr>
+              <tr>
+              <th>Kembali</th>
+              <td><input type="text" name="jumlah_kembalian" class="form-control" placeholder="Total bayar" value="" id="kembalian"> <span class="input-group-btn"></td>
+            </tr>
+                  
           </table>
         </div>
+            
       </div>
       <!-- /.col -->
     </div>
@@ -183,15 +195,17 @@ $this->load->view('page/template/sidebar');
     <!-- this row will not appear when printing -->
     <div class="row no-print">
       <div class="col-xs-12">
+          <input style="display:none;" name="kode_psn009" type="text" value="<?php echo $kode_psn; ?>">
+          <input style="display:none;" name="total009" type="text" value="<?php echo $total; ?>">
         <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
-        <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment
-        </button>
+        <input type="submit" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment
         <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">
           <i class="fa fa-download"></i> Generate PDF
         </button>
       </div>
     </div>
   </section>
+      </form>
   <!-- /.content -->
   <div class="clearfix"></div>
 </div>

@@ -20,6 +20,28 @@ $this->load->view('page/template/head');
 $this->load->view('page/template/topbar');
 $this->load->view('page/template/sidebar');
 ?>
+<script>
+    
+        function select_obat(){
+        var kategori = $("#kategori_obat").val();
+        console.log(kategori);
+        $.ajax({
+            type : "POST"  ,
+            dataType : "JSON",
+            url : "<?php echo site_url('dokter/pilih_obat'); ?>",
+            data : {cat_obat : kategori},
+            success:function(data){
+                $.each(data, function(i,n){
+                    $("#view_obat").append(
+                        '<option value="'+n.kode_obat+'">'+n.nama_obat+'</option>'
+                    );
+                });
+            }
+        });
+        $("#view_obat").empty();
+        
+    }
+</script>
 
 <!-- Content Header (Page header) -->
 <section class="content-header">
@@ -28,40 +50,52 @@ $this->load->view('page/template/sidebar');
     <!-- Small boxes (Stat box) -->
     <div class="row">
         <!-- left column -->
-        <div class="col-md-12">
-          <!-- general form elements -->
-          <div class="box box-primary">
-            <div class="box-body">
-              <?php foreach($this->cart->contents() as $items): ?>
-                          <form role="form" action="<?php echo site_url('dokter/proses_obat/'.$items['id']); ?>" method="post">
-            <div class="form-group">
-              <i><p class="">Nomor resep : </p></i>
-              <i><p>Tanggal : <?php echo date('d-m-Y'); ?></p></i>
-                  <label>Resep</label>
-                  <p>Nama obat : <?php echo $items['name']; ?></p>
-                  <p>Jenis obat : <?php echo $items['jenis_obat']; ?></p>
-                  <p>Kategori : <?php echo $items['kategori'] ?></p>
-
-                  <textarea class="form-control" name="resep_lengkap" rows="6" placeholder="Masukkan resep..." required="true"></textarea>
-                  <br>
-                  Dosis : <input class="form-control" type="text" name="dosis" placeholder="Masukkan dosis obat">
+         <div class="box box-success">
+            <div class="box-header with-border">
+              <h3 class="box-title">General Elements</h3>
             </div>
-            <?php endforeach; ?>
-
-
-            <div class="box-footer">
-                <a href="<?php echo site_url('dokter/remove_obat'); ?>" class="btn btn-danger">Cancel</a>
-                <button type="reset" class="btn btn-default">Hapus</button>
-                <button type="submit" class="btn btn-info pull-right">Sign in</button>
-              </div>
-          </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="form-group">
+                  <!--<label>Pilih kategori obat</label>
+                    
+                  <select class="form-control" id="kategori_obat" onclick="select_obat()" >
+                      <?php foreach ($query_obat as $k): ?>
+                    <option value="<?php echo $k->kategori; ?>"><?php echo $k->kategori; ?></option>
+                      <?php endforeach; ?>
+                  </select>
+                    <?php foreach($query as $k): ?>
+                    
+                    <div class="form-group">
+                        
+                  <label>Pilih obat</label>
+                    <select class="form-control" id="view_obat" name="pilih_pilih_obat">
+                    <!-- generated otomatis 
+                  </select>
+                        -->
+                    <form role="form" action="<?php echo site_url('dokter/proses_resep/'.$k->kode_psn); ?>" method="post">
+                    <div class="form-group">
+                  <label>Diagnosa</label>
+                  <textarea name="diagnosa" class="form-control" rows="5" placeholder="Enter ..."></textarea>
+                </div>
+                    
+                </div>    
+                <!-- text input -->
+                  <p>Kode pasien : <?php echo $k->kode_psn; ?></p>
+                  <p>Nama pasien : <?php echo $k->nama_psn; ?></p>
+                <div class="form-group">
+                  <label>Masukkan resep</label>
+                  <textarea name="ket" class="form-control" rows="5" placeholder="Enter ..."></textarea>
+                </div>
           <!-- /.box -->
+                  <?php endforeach; ?>
+                <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+        </form>        
+             </div>
+             </div>
         </div>
-      </div>
-    </div>
-
-
-
 </section><!-- /.content -->
 
 <script src="<?php echo base_url('assets/js/jquery-ui.min.js') ?>" type="text/javascript"></script>

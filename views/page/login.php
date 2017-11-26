@@ -12,6 +12,9 @@
         <link href="<?php echo base_url('assets/AdminLTE-2.0.5/dist/css/AdminLTE.min.css') ?>" rel="stylesheet" type="text/css" />
         <!-- iCheck -->
         <link href="<?php echo base_url('assets/AdminLTE-2.0.5/plugins/iCheck/square/blue.css') ?>" rel="stylesheet" type="text/css" />
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -42,18 +45,43 @@
     </head>
     <body class="login-page">
 
-      <?php $pass="wawRBSVcBC"; $password_h = password_hash($pass,PASSWORD_BCRYPT);
+      <?php $pass="admin"; $password_h = password_hash($pass,PASSWORD_BCRYPT);
       echo $password_h;
        ?>
+        <script>
+            function login_admin(){
+                var link_t = "<?php echo site_url('auth/login_admin'); ?>"
+                
+                $("#action").attr('action',link_t);
+                $("#input_username").attr('placeholder','Username akun admin anda');
+                
+            }
+            
+            function login_apoteker(){
+                var link_t = "<?php echo site_url('auth/login_apoteker'); ?>"
+                
+                $("#action").attr('action',link_t);
+                $("#input_username").attr('placeholder','Username akun apoteker anda');
+            }
+            
+            function login_dokter(){
+                var link_t = "<?php echo site_url('auth/login'); ?>"
+                
+                $("#action").attr('action',link_t);
+                
+                $("#input_username").attr('placeholder','Username akun dokter anda');
+            }
+        </script>
         <div class="login-box">
             <div class="login-logo">
                 <a href="#"><b>Poliklinik </b>LTE</a>
             </div><!-- /.login-logo -->
             <div class="login-box-body">
-                <p class="login-box-msg">Sign in to start your session</p>
-                <form action="<?php echo site_url('auth/login'); ?>" method="post">
+                <p id="titel" class="login-box-msg">Sign in to start your session</p>
+                <div id="titel_crek"></div>
+                <form id="action" action="<?php echo site_url('auth/login'); ?>" method="post">
                   <div class="form-group has-feedback">
-                      <input type="text" id="input_password" name="nameuser" class="form-control" placeholder="Username"/>
+                      <input type="text" id="input_username" name="nameuser" class="form-control" placeholder="Username"/>
                       <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                   </div>
                     <div class="form-group has-feedback">
@@ -73,7 +101,10 @@
 
 
 
-                <a href="javascript:void(0)" onClick="alert('Hubungi administrator setempat')" class="text-center">Register a new membership</a>
+                <a href="javascript:void(0)" onClick="alert('Hubungi administrator setempat')" class="text-center">Register a new membership</a><br>
+                <a href="javascript:void(0)" onClick="login_admin()" class="text-center">Login sebagai admin</a><br>
+                <a href="javascript:void(0)" onClick="login_apoteker()" class="text-center">Login sebagai apoteker</a><br>
+                <a href="javascript:void(0)" onClick="login_dokter()" class="text-center">Login sebagai dokter</a>
                 <p>&copy;Jovv</p>
             </div><!-- /.login-box-body -->
         </div><!-- /.login-box -->

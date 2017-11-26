@@ -67,7 +67,7 @@ $this->load->view('page/template/sidebar');
                   success:function(data){
                     $.each(data,function(i,n){
                     $("#vw_obat").append(
-                      '<tr><td>'+n.kode_obat+'</td> <td>'+n.nama_obat+'</td> <td>'+n.jenis_obat+'</td> <td>'+n.kategori+'</td> <td>'+n.harga_obat+'</td> <td>'+n.jumlah_obat+'</td> <td><a id="cek_stok" data-value = '+n.kode_obat+' onClick="cek_stokobat()" href="javascript:void(0)">Cek stok</a></td></tr>'
+                      '<tr><td>'+n.kode_obat+'</td> <td>'+n.nama_obat+'</td> <td>'+n.jenis_obat+'</td> <td>'+n.kategori+'</td> <td>'+n.harga_obat+'</td> <td>'+n.jumlah_obat+'</td> <td><a id="cek_stok" data-value = '+n.kode_obat+' onClick="return cek_stokobat()" href="javascript:void(0)">Cek stok</a></td></tr>'
                     );
                   });
                   }

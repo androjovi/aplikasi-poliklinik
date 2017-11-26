@@ -15,113 +15,98 @@ $this->load->view('page/template/head');
 <link href="<?php echo base_url('assets/AdminLTE-2.0.5/plugins/daterangepicker/daterangepicker-bs3.css') ?>" rel="stylesheet" type="text/css" />
 <!-- bootstrap wysihtml5 - text editor -->
 <link href="<?php echo base_url('assets/AdminLTE-2.0.5/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') ?>" rel="stylesheet" type="text/css" />
-<script>
-function hapus_confirm(){
-  var msg;
-  msg= "Apakah Anda Yakin Akan Menghapus Data ? " ;
-  var agree=confirm(msg);
-  if (agree)
-  return true ;
-  else
-  return false ;
-}
-</script>
+
 <?php
 $this->load->view('page/template/topbar');
 $this->load->view('page/template/sidebar');
 ?>
+<script>
+    
+        function select_obat(){
+        var kategori = $("#kategori_obat").val();
+        console.log(kategori);
+        $.ajax({
+            type : "POST"  ,
+            dataType : "JSON",
+            url : "<?php echo site_url('apoteker/pilih_obat'); ?>",
+            data : {cat_obat : kategori},
+            success:function(data){
+                $.each(data, function(i,n){
+                    $("#view_obat").append(
+                        '<option value="'+n.kode_obat+'">'+n.nama_obat+' - '+n.jumlah_obat+'</option>'
+                    );
+                });
+            }
+        });
+        $("#view_obat").empty();
+        
+    }
+</script>
 
 <!-- Content Header (Page header) -->
-
 <section class="content-header">
-    <h1>
-        Pembayaran
-        <small>Control panel</small>
-    </h1>
-    <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">pembayaran</li>
-    </ol>
-</section>
-
 <!-- Main content -->
 <section class="content">
+    <!-- Small boxes (Stat box) -->
     <div class="row">
-      <div class="col-xs-12">
-        <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Data pembayaran</h3>
+        <!-- left column -->
+         <div class="box box-success">
+            <div class="box-header with-border">
+              <h3 class="box-title">Pemberian obat</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-    <div class="input-group">
-      <form action="<?php echo site_url('datamaster/cari_dataobat'); ?>" method="post" id="form">
-      <input id="val_search" type="text" class="form-control" placeholder="Search for...">
-      <span class="input-group-btn">
-        <button id="search" class="btn btn-default" type="button">Go!</button>
-      </form>
-      </span>
-    </div><!-- /input-group -->
-
-</div><!-- /.row -->
-
-              <table id="example1" class="table table-bordered table-striped">
-                <thead>
-
-                <tr>
-                  <th>No pendaftaran</th>
-                  <th>Nama dokter</th>
-                  <th>Nama pasien</th>
-                  <th>Kode poliklinik</th>
-                  <th>Biaya</th>
-                  <th>Aksi</th>
-                </tr>
-
-                </thead>
-                <tbody>
-                  <?php foreach($query as $k): ?>
-                <tr id="test">
-                  <td><?php echo $k->nomor_pdf; ?></td>
-                  <td><?php echo $k->nama_dkt; ?></td>
-                  <td><?php echo $k->nama_psn; ?></td>
-                  <td><?php echo $k->kode_plk; ?></td>
-                  <td><?php echo num_format($k->biaya); ?></td>
-                  <td><a class="btn btn-primary" href="<?php echo site_url('pembayaran/bayar/'. ency($k->nomor_pdf)."/".ency($k->kode_psn)); ?>" role="button"><i class="fa fa-edit"></i>Bayar</a> 
-                      <a class="btn btn-danger" onClick="return hapus_confirm()" href="<?php echo site_url('datamaster/delete_pendaftar/'. ency($k->nomor_pdf)); ?>" role="button"><i class="fa fa-remove"></i>Hapus</a>  </td>
-                </tr>
-                <?php endforeach; ?>
-
-              </tbody>
-              <?php echo $halaman; ?>
-              </table>
-            </div>
-            <!-- /.box-body -->
-          </div>
+                <?php foreach($query as $k): ?>
+                <div class="callout callout-danger">
+                
+              
+                    <p>Diagnosa pasien : <?php echo $k->diagnosa; ?></p>
+                  <p>Tanggal resep : <?php echo $k->tanggal_resep; ?> </p>
+                  <p>Nama pasien : <?php echo $k->nama_psn; ?></p>
+                  <p>Nama dokter : <?php echo $k->nama_dkt; ?></p>    
+                  <p>Detail resep : <?php echo $k->detail_resep; ?></p>
+              </div>      
+                <hr>
+                <label>Pilih kategori obat</label>
+                <div class="form-group">
+                    
+                    
+                  <select class="form-control" id="kategori_obat" onclick="select_obat()" >
+                      <?php foreach ($query_obat as $z): ?>
+                    <option value="<?php echo $z->kategori; ?>"><?php echo $z->kategori; ?></option>
+                      <?php endforeach; ?>
+                  </select>
+                    
+                    <form role="form" action="<?php echo site_url('apoteker/proses_obat/'.ency($k->nomor_resep)."/".ency($k->nomor_pdf)); ?>" method="post">
+                    <div class="form-group">
+                        
+                  <label>Pilih obat</label>
+                    <select class="form-control" id="view_obat" name="pilih_pilih_obat">
+                    <!-- generated otomatis -->
+                  </select>
+                </div>  
+                        <input type="text" style="display:none;" name="kode_psn" value="<?php echo $k->kode_psn; ?>">
+                <div class="form-group">
+                    <label>Jumlah obat yang akan diberikan</label>
+                    <input type="number" placeholder="Jumlah obat" name="jumlah_obat" class="form-control" style="width:30%;" value="1">
+                </div>
+                <!-- text input -->
+                  
+                <div class="form-group">
+                  <label>Masukkan dosis</label>
+                  <textarea class="form-control" name="dosis" rows="5" placeholder="Enter ..."></textarea>
+                </div>
           <!-- /.box -->
+                  <?php endforeach; ?>
+                <div class="box-footer">
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </div>
+        </form>        
+             </div>
+             </div>
         </div>
-        <!-- /.col -->
-      </div>
-      <!-- /.row -->
-
 </section><!-- /.content -->
 
-
-
-<?php
-$this->load->view('page/template/js');
-?>
-
-<!--tambahkan custom js disini-->
-<!-- jQuery UI 1.11.2 -->
-<script>
-$(document).ready(function(){
-  $("#add_obat").click(function(){
-    $("#tampil_addobat").toggle();
-  })
-
-
-})
-</script>
 <script src="<?php echo base_url('assets/js/jquery-ui.min.js') ?>" type="text/javascript"></script>
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>

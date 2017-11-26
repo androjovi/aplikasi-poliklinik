@@ -47,29 +47,12 @@ $this->load->view('page/template/sidebar');
 <!-- Main content -->
 <section class="content">
     <!-- Small boxes (Stat box) -->
-    <div class="row">
-        <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-aqua">
-                <div class="inner">
-                    <h3><?php echo $total; ?></h3>
-                    <p>Total pasien yang anda tangani</p>
-                </div>
-                <div class="icon">
-                    <i class="fa fa-heart"></i>
-                </div>
-            </div>
-        </div><!-- ./col -->
-        <a href="<?php echo site_url('dokter/jam_praktek') ?>" class="btn btn-primary" role="button">Atur jam praktek</a>
-      </div>
-
-
-
+    
     <div class="row">
       <div class="col-xs-12">
         <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Data Table Obat</h3>
+              <h3 class="box-title">Data Table Pengeloaan resep</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -84,15 +67,16 @@ $this->load->view('page/template/sidebar');
 
 </div><!-- /.row -->
 
-              <table id="example1" class="table table-bordered table-striped table-responsive">
+              <table id="example1" class="table table-bordered table-striped">
                 <thead>
 
                 <tr>
-                  <th>Nomor daftar</th>
-                  <th>Tanggal daftar</th>
-                  <th>Kode pasien</th>
+                  <th>No resep</th>
+                  <th>Tanggal resep</th>
                   <th>Nama pasien</th>
-                  <th>Keterangan</th>
+                  <th>Nama dokter</th>
+                  <th>Kode poliklinik</th>
+                  <th>Status bayar</th>
                   <th>Action</th>
                 </tr>
 
@@ -100,16 +84,13 @@ $this->load->view('page/template/sidebar');
                 <tbody>
                   <?php foreach($query as $k): ?>
                 <tr id="test">
-                  <td><?php echo $k->nomor_pdf; ?></td>
-                  <td><?php echo $k->tanggal_pdf; ?></td>
-                  <td><?php echo $k->kode_psn; ?></td>
+                  <td><?php echo $k->nomor_resep; ?></td>
+                  <td><?php echo $k->tanggal_resep; ?></td>
                   <td><?php echo $k->nama_psn; ?></td>
-                  <td><?php echo $k->ket; ?></td>
-                  <td><a class="btn btn-warning" href="<?php echo site_url('dokter/berikan_resep/'. ency($k->kode_psn)); ?>" role="button"><i class="fa fa-child"></i>Berikan Resep</a>
-                      <a class="btn btn-danger" onClick="return hapus_confirm()" href="<?php echo site_url("datamaster/delete_pendaftar/". ency($k->kode_psn)); ?>" role="button"><i class="fa fa-remove"></i>Hapus</a>&nbsp;
-                      <a class="btn btn-primary" href="<?php echo site_url('datamaster/edit_pasien/'. ency($k->kode_psn)); ?>" role="button"><i class="fa fa-edit"></i>Edit</a>
-                      <a class="btn btn-info" href="<?php echo site_url('dokter/infolengkap/'. ency($k->kode_psn)); ?>" role="button"><i class="fa fa-cubes"></i>More</a>
-                  </td>
+                  <td><?php echo $k->nama_dkt; ?></td>
+                  <td><?php echo $k->kode_plk; ?></td>
+                  <td><?php echo ($k->bayar == 0 ) ? "<p class='text-red'>Belum bayar</p>" : "<p class='text-green'>Bayar</p>"; ?> </td>
+                  <td><a href="<?php echo site_url('apoteker/obat/'.ency($k->nomor_resep)."/".ency($k->nomor_pdf)); ?>"  class="btn btn-primary" role="button">Berikan obat</a></td>
                 </tr>
                 <?php endforeach; ?>
 
@@ -122,6 +103,7 @@ $this->load->view('page/template/sidebar');
           <!-- /.box -->
         </div>
         <!-- /.col -->
+    
       </div>
       <!-- /.row -->
 

@@ -149,7 +149,7 @@ $this->load->view('page/template/sidebar');
 
 
 
-            function random_all() {
+    $(document).ready(function(){
         var campur = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
         var panjang = 4;
         var prefix = 'P';
@@ -158,8 +158,8 @@ $this->load->view('page/template/sidebar');
             var hasil = Math.floor(Math.random() * campur.length);
             random_all += campur.substring(hasil,hasil+1);
         }
-        document.form_pendaftar.nom_pendaftar.value = "P_"+random_all;
-    }
+        $("#rindim").val("P_"+random_all);
+    })
 </script>
 <div id="tes"><div>
             <form class="form-horizontal" name="form_pendaftar" action="<?php echo  site_url('dashboard/submit_pendaftar'); ?>" method="post">
@@ -168,11 +168,7 @@ $this->load->view('page/template/sidebar');
                   <label for="inputEmail3" class="col-sm-2 control-label">Nomor pendaftar</label>
 
                   <div class="col-sm-10">
-                    <input type="text"  class="form-control" value=""  placeholder="Nomor pendaftar" name="nom_pendaftar" required="true"></span>
-
-                    <span class="input-group-btn">
-                      <button type="button" class="btn btn-info btn-flat" onClick="random_all()">Generate!</button>
-                    </span>
+                    <input type="text" id="rindim" readonly  class="form-control" value="" placeholder="Nomor pendaftar" name="nom_pendaftar" required="true"></span>
                   </div>
                 </div>
                 <div class="form-group">
