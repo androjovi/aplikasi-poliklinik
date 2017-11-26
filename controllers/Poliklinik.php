@@ -17,9 +17,6 @@ class Poliklinik extends CI_Controller{
               $ff= ency($str);
               echo decr($ff);
 
-
-
-
             }
 
 }

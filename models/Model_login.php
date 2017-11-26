@@ -1,7 +1,7 @@
 <?php
 class Model_login extends CI_Model{
-  function login($where){
-    $this->db->where('username',$where);
-    return $this->db->get('dokter');
+  function login($kolom,$where,$table){
+    $this->db->where($kolom,$where);
+    return $this->db->get($table);
   }
 }

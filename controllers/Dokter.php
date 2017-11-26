@@ -3,13 +3,16 @@ class Dokter extends CI_Controller{
 
             function __construct(){
               parent::__construct();
+                
               $this->load->model('model_dokter');
               $this->load->library(array('pagination','session','cart','form_validation'));
+               
 
             }
 
             function index($id = NULL){
-              unset_sesi('kode_psn_resep');
+               unset_sesi('kode_psn_resep');
+                $this->cart->destroy();
               $data['total'] = $this->model_dokter->get_all_pasien(NULL,NULL,$this->session->userdata('kodenameuser'))->num_rows();
 
               $config['base_url']=base_url()."dashboard/data_obat";
@@ -50,12 +53,15 @@ class Dokter extends CI_Controller{
               $this->load->view('page/dokter/vw_pasien',$data);
             }
 
-            function obat(){
+            /*function obat(){
               $this->load->view('page/dokter/vw_berikanobat');
               $this->session->set_userdata('kode_psn_resep',$this->uri->segment('3'));
 
             }
-
+            */
+    
+            
+    /*
             function cari_dataobat(){
               $var = ambil('search_obat');
 
@@ -73,6 +79,8 @@ class Dokter extends CI_Controller{
 
               echo json_encode($array_data);
             }
+            
+            
 
             function cek_stokobat(){
 
@@ -93,7 +101,8 @@ class Dokter extends CI_Controller{
             }
             echo json_encode($array_data);
             }
-
+*/
+    /*
             function add_obat($kode){
               $data['query'] = $this->model_dokter->ambil_obat(decr($kode))->result();
               $d = $this->model_dokter->ambil_obat(decr($kode));
@@ -117,27 +126,41 @@ class Dokter extends CI_Controller{
               $this->form_validation->set_rules('resep_lengkap','Resep obat','required');
 
                 if ($this->form_validation->run()){
-                      $data['kode'] = random_chara("R_");
+                      $data['kode'] = random_chara("R_"); //prefix R
                       $this->session->set_flashdata("kode_resep",$data['kode']);
-                      $r = $this->model_dokter->get_pasien($this->session->userdata('kode_psn'))->row();
-                  $data1=array(
+                      $r = $this->model_dokter->get_pasien($this->session->userdata('kode_psn_resep'))->row();
+                  foreach ($this->cart->contents() as $items):  
+                   $data1 = array(
                     'nomor_resep'    => $data['kode'],
                     'tanggal_resep'  => date('d-m-Y'),
+                    'kode_obat'      => $items['id'],
                     'kode_dkt'       => $r->kode_dkt,
                     'kode_psn'       => $r->kode_psn,
                     'kode_plk'       => $r->kode_plk,
                     'detail_resep'   => ambil('resep_lengkap'),
-                  );
-                  foreach ($this->cart->contents() as $items):
+                  );                        
+                        
+                  
                   $data2=array(
                     'nomor_resep'    => $data['kode'],
                     'kode_obat'      => $items['id'],
                     'dosis'          => ambil('dosis'),
                   );
+                    $nomor_obat = $items['id'];
                   endforeach;
+                    foreach ($this->model_dokter->get_data($nomor_obat,"kode_obat","obat")->result() as $k){
+                        $jumlah_obat = $k->jumlah_obat;
+                    }
+                    $min = --$jumlah_obat;
+                    $data3=array(
+                        'jumlah_obat' => $min
+                    );
 
-                  if ($this->model_dokter->insert_data($data1,'resep')){
-                    $this->model_dokter->insert_data($data2,'detail');
+                  if ($this->model_dokter->insert_data($data2,'detail')){
+                      $this->model_dokter->insert_data($data1,'resep');
+                      
+                      $this->model_dokter->update_data($data3,"kode_obat",$nomor_obat,"obat");
+                          
                     $this->load->view('page/dokter/vw_detailresep',$data);
 
                   }else{
@@ -145,6 +168,8 @@ class Dokter extends CI_Controller{
                   }
                 }
             }
+            
+            
             function bayar_langsung($kode){
               foreach ($this->cart->contents() as $items):
                 $data=array(
@@ -163,16 +188,89 @@ class Dokter extends CI_Controller{
               }else{
                 ref_pesan("Tidak berhasil",'dokter');
               }
+                
+                unset_sesi('kode_psn_resep');
+              $this->cart->destroy();
             }
             function remove_obat(){
               unset_sesi('kode_psn_resep');
               $this->cart->destroy();
               redirect('dokter');
             }
-
+            
+            */
+    
+            function berikan_resep($kode){
+                $data['query_obat'] = $this->model_dokter->get_obatfromcategory()->result();
+                $data['query'] = $this->model_dokter->get_pasien($kode)->result();
+                $this->load->view('page/dokter/vw_resep',$data);
+            }
+            
+            function pilih_obat(){
+                $f = ambil('cat_obat');
+                
+                $z = $this->model_dokter->get_obatgen($f)->result();
+                
+                foreach ($z as $k){
+                    $data[] = array(
+                        'kode_obat' => $k->kode_obat,
+                        'nama_obat' => $k->nama_obat,
+                    );
+                    
+                    
+                }
+                echo json_encode($data);
+            }
+    
+            function proses_resep($kode){
+                $acak_kode = random_chara("R_");
+                $f= $this->model_dokter->get_data($this->session->userdata('kodenameuser'),'kode_dkt','dokter')->row();
+                $data = array(
+                    'nomor_resep'       => $acak_kode,
+                    'tanggal_resep'     => date('d-m-Y'),
+                    'diagnosa'         => ambil('diagnosa'),
+                    'kode_dkt'          => $this->session->userdata('kodenameuser'),
+                    'kode_psn'          => $kode,
+                    'kode_plk'          => $f->kode_plk,
+                    'detail_resep'        => ambil('ket'),
+                );
+                if (    $this->model_dokter->insert_data($data,'resep')){
+                    ref_pesan("Resep berhasil ditambahkan",'dokter');
+                }else{
+                    ref_error(NULL,'dokter');
+                }
+            }
             function coba(){
               $r=unset_sesi("andro,jovi");
 
             }
-
+    
+            function infolengkap($kode){
+                $data['query'] = $this->model_dokter->get_resepinfo(decr($kode))->result();
+                $this->load->view('page/dokter/vw_infolengkap',$data);
+            
+            }
+    
+            function jam_praktek(){
+                        $this->load->view('page/dokter/vw_aturjampraktek');
+                    }
+    
+            function proses_aturjam(){
+                $this->form_validation->set_rules('jam_mulai','Mulai praktek','required');
+                $this->form_validation->set_rules('jam_selesai','Selesai praktek','required');
+                
+                if ($this->form_validation->run()){
+                
+                $data = array(
+                    'mulai_praktek'     => ambil('jam_mulai'),
+                    'selesai_praktek'   => ambil('jam_selesai'),
+                );
+                if ($this->model_dokter->update_data($data,'kode_dkt',$this->session->userdata('kodenameuser'),'dokter')){
+                    ref_pesan('Berhasil','dokter');
+                }else{
+                    echo "Galat";
+                }
+                    
+                    }
+            }
 }

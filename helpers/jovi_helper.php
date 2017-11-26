@@ -6,8 +6,13 @@ function ref_otomatis($href){ // nge direct otomatis
 function ref_pesan($pesan,$href){ // nge direct otomatis pake alert
   echo "<script>alert('".$pesan."');window.location.href='".site_url($href)."'</script>";
 }
+function ref_error($pesan,$href){
+    echo "<h2>Error tidak diketahui</h2>";
+    echo "<a href='".site_url($href)."'>Kembali</a>";
+    echo "<pre>".print_r($_SERVER)."</pre>";
+}
 function num_format($angka){
-  echo "Rp. ".number_format($angka,2,".",","); // format penulisan di indonesia, klo ndak salah sih
+  echo "Rp. ".number_format($angka,0,".",","); // format penulisan di indonesia, klo ndak salah sih
 }
 function ency($string){ // encrypt url
   /*

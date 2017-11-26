@@ -15,7 +15,11 @@ class Model_dashboard extends CI_Model{
     return $this->db->insert('pendaftaran');
   }
   function get_dokter($where){
-    $this->db->where('kode_plk',$where);
+      $f= date('w');
+      
+    $this->db->where('kode_plk',$where);     
+      $this->db->where('mulai_praktek >=', $f);
+    
     return $this->db->get('dokter');
   }
   function cek_pasien_ada($where){

@@ -1,7 +1,7 @@
 <?php
 ob_start();
 class Dashboard extends CI_Controller{
-
+    
             function __construct(){
               parent::__construct();
 
@@ -12,6 +12,12 @@ class Dashboard extends CI_Controller{
                       if ($this->session->userdata('userstatus') == FALSE){
                         redirect('auth');
                       }
+                
+                if ($this->session->userdata('aksesstatus') === 2){
+                    redirect('dokter');
+                }else if($this->session->userdata('aksesstatus') === 3){
+                    redirect('apoteker');
+                }
 
             }
 
@@ -84,7 +90,11 @@ class Dashboard extends CI_Controller{
               }else{
                 echo 1;
               }
+                
             }
-
+    
+    function rilis(){
+        echo date('w');
+    }
 
 }
