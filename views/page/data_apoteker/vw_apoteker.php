@@ -15,6 +15,7 @@ $this->load->view('page/template/head');
 <link href="<?php echo base_url('assets/AdminLTE-2.0.5/plugins/daterangepicker/daterangepicker-bs3.css') ?>" rel="stylesheet" type="text/css" />
 <!-- bootstrap wysihtml5 - text editor -->
 <link href="<?php echo base_url('assets/AdminLTE-2.0.5/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') ?>" rel="stylesheet" type="text/css" />
+
 <script>
 function hapus_confirm(){
   var msg;
@@ -56,18 +57,11 @@ $this->load->view('page/template/sidebar');
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-    <div class="input-group">
-      <form action="<?php echo site_url('datamaster/cari_dataobat'); ?>" method="post" id="form">
-      <input id="val_search" type="text" class="form-control" placeholder="Search for...">
-      <span class="input-group-btn">
-        <button id="search" class="btn btn-default" type="button">Go!</button>
-      </form>
-      </span>
-    </div><!-- /input-group -->
+    
 
 </div><!-- /.row -->
 
-              <table id="example1" class="table table-bordered table-striped">
+              <table class="table table-bordered table-striped" id="table">
                 <thead>
 
                 <tr>
@@ -121,8 +115,8 @@ $this->load->view('page/template/js');
 $(document).ready(function(){
   $("#add_obat").click(function(){
     $("#tampil_addobat").toggle();
-  })
-
+  });
+	$("#table").DataTable();
 
 })
 </script>

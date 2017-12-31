@@ -75,18 +75,10 @@ $this->load->view('page/template/sidebar');
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-    <div class="input-group">
-      <form action="<?php echo site_url('datamaster/cari_dataobat'); ?>" method="post" id="form">
-      <input id="val_search" type="text" class="form-control" placeholder="Search for...">
-      <span class="input-group-btn">
-        <button id="search" class="btn btn-default" type="button">Go!</button>
-      </form>
-      </span>
-    </div><!-- /input-group -->
 
 </div><!-- /.row -->
 
-              <table id="example1" class="table table-bordered table-striped">
+              <table class="table table-bordered table-striped" id="table">
                 <thead>
 
                 <tr>
@@ -143,7 +135,7 @@ $(document).ready(function(){
     $("#tampil_addobat").toggle();
   })
 
-
+$("#table").DataTable();
 })
 </script>
 <script src="<?php echo base_url('assets/js/jquery-ui.min.js') ?>" type="text/javascript"></script>

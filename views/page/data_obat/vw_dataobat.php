@@ -15,6 +15,8 @@ $this->load->view('page/template/head');
 <link href="<?php echo base_url('assets/AdminLTE-2.0.5/plugins/daterangepicker/daterangepicker-bs3.css') ?>" rel="stylesheet" type="text/css" />
 <!-- bootstrap wysihtml5 - text editor -->
 <link href="<?php echo base_url('assets/AdminLTE-2.0.5/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') ?>" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/jq-3.2.1/dt-1.10.16/r-2.2.1/datatables.min.css"/>
+ 
 <script>
 function hapus_confirm(){
   var msg;
@@ -30,6 +32,8 @@ function hapus_confirm(){
 $this->load->view('page/template/topbar');
 $this->load->view('page/template/sidebar');
 ?>
+
+
 
 <!-- Content Header (Page header) -->
 
@@ -129,7 +133,27 @@ $this->load->view('page/template/sidebar');
       </div>
 
 </div>
-
+<script>
+function search_data(){
+  var data = $("#val_search").val();
+  $.ajax({
+    type : "POST",
+    dataType: "JSON",
+    url : "<?php echo site_url('datamaster/search_dataobat'); ?>",
+    data : {val_search : data},
+    success : function(data){
+      console.log(data);
+      $.each(data, function(i,n){
+        $("#test").append(
+          '<td>'+n.kode_obat+'</td><td>'+n.nama_obat+'</td>'
+        );
+      });
+    }
+  })
+$("#test").empty();
+  
+}
+</script> 
 
     <div class="row">
       <div class="col-xs-12">
@@ -139,18 +163,9 @@ $this->load->view('page/template/sidebar');
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-    <div class="input-group">
-      <form action="<?php echo site_url('datamaster/cari_dataobat'); ?>" method="post" id="form">
-      <input id="val_search" type="text" class="form-control" placeholder="Search for...">
-      <span class="input-group-btn">
-        <button id="search" class="btn btn-default" type="button">Go!</button>
-      </form>
-      </span>
-    </div><!-- /input-group -->
-
 </div><!-- /.row -->
 
-              <table id="example1" class="table table-bordered table-striped">
+              <table class="table table-bordered table-striped" id="table">
                 <thead>
 
                 <tr>
@@ -204,13 +219,10 @@ $(document).ready(function(){
   $("#add_obat").click(function(){
     $("#tampil_addobat").toggle();
   })
-
-
-
-
+	$("#table").DataTable();
 })
 </script>
-<script src="<?php echo base_url('assets/js/jquery-ui.min.js') ?>" type="text/javascript"></script>
+<!-- <script src="<?php echo base_url('assets/js/jquery-ui.min.js') ?>" type="text/javascript"></script> -->
 <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
 <script>
     $.widget.bridge('uibutton', $.ui.button);

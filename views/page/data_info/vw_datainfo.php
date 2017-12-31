@@ -44,112 +44,94 @@ $this->load->view('page/template/sidebar');
 </section>
 
 <!-- Main content -->
+<button class="btn btn-primary">Print</button>
 <section class="content">
-    <!-- Small boxes (Stat box) -->
-    <div class="row">
+<div class="row">
         <div class="col-lg-3 col-xs-6">
-            <!-- small box -->
-            <div class="small-box bg-aqua">
-                <div class="inner">
-                    <h3><?php echo $total_poliklinik; ?></h3>
-                    <p>Total poliklinik</p>
-                </div>
-                <div class="icon">
-                    <i class="ion ion-bag"></i>
-                </div>
+          <!-- small box -->
+          <div class="small-box bg-aqua">
+            <div class="inner">
+              <h3><?php echo $total_poli; ?></h3>
+
+              <p>Total poliklinik terdaftar</p>
             </div>
-        </div><!-- ./col -->
-        <a id="add_obat" href="javascript::void(0)" class="btn btn-app">
-          <i class="fa fa-plus-square"></i> Tambah poliklinik
-        </a>
-      </div>
-
-      <div id="tampil_addobat" style="display:none;">
-
-        <div class="row">
-            <!-- left column -->
-            <div class="col-md-12">
-              <!-- general form elements -->
-              <div class="box box-danger" >
-                <div class="box-header with-border">
-                  <h3 class="box-title">Tambah data</h3>
-                </div>
-                <!-- /.box-header -->
-                <!-- form start -->
-                <form class="form-horizontal" action="<?php echo  site_url('datamaster/submit_datapoliklinik'); ?>" method="post">
-                  <div class="box-body">
-                    <div class="form-group">
-                      <label for="inputEmail3" class="col-sm-2 control-label">Kode poliklinik</label>
-
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control"  placeholder="Kode poliklinik" name="kod_poli" required="true">
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <label for="inputPassword3" class="col-sm-2 control-label">Nama poliklinik</label>
-
-                      <div class="col-sm-10">
-                        <input type="text" class="form-control"  placeholder="Nama poliklinik" name="nam_poli" required="true">
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <button type="reset" class="btn btn-default">Reset</button>
-
-                  </div>
-                </form>
-              </div>
-              <!-- /.box -->
+            <div class="icon">
+              <i class="fa fa-shopping-cart"></i>
             </div>
-            </div>
-
-      </div>
-
-
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="box">
-                <div class="box-header">
-                  <h3 class="box-title">Data Table Obat</h3>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body">
-    </div><!-- /.row -->
-
-                  <table class="table table-bordered table-striped" id="table">
-                    <thead>
-
-                    <tr>
-                      <th>Kode poliklinik</th>
-                      <th>Nama poliklinik</th>
-                      <th>Action</th>
-                    </tr>
-
-                    </thead>
-                    <tbody>
-                      <?php foreach($query as $k): ?>
-                    <tr id="test">
-                      <td><?php echo $k->kode_plk; ?></td>
-                      <td><?php echo $k->nama_plk; ?></td>
-                      <td><a class="btn btn-primary" href="<?php echo site_url('datamaster/edit_dokter/'. ency($k->kode_plk)); ?>" role="button"><i class="fa fa-edit"></i>Edit</a> <a class="btn btn-danger" onClick="return hapus_confirm()" href="<?php echo site_url('datamaster/delete_poliklinik/'. ency($k->kode_plk)); ?>" role="button"><i class="fa fa-remove"></i>Hapus</a>  </td>
-                    </tr>
-                    <?php endforeach; ?>
-
-                  </tbody>
-                  <?php echo $halaman; ?>
-                  </table>
-                </div>
-                <!-- /.box-body -->
-              </div>
-              <!-- /.box -->
-            </div>
-            <!-- /.col -->
+            
           </div>
-          <!-- /.row -->
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-green">
+            <div class="inner">
+              <h3><?php echo $total_pendaftaran; ?></h3>
 
+              <p>Total pendaftar terdaftar</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-stats-bars"></i>
+            </div>
+            
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-yellow">
+            <div class="inner">
+              <h3><?php echo $total_pasien; ?></h3>
 
+              <p>Total pasien terdaftar</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-person-add"></i>
+            </div>
+            
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h3><?php echo $total_obat; ?></h3>
+
+              <p>Total obat terdaftar</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-pie-graph"></i>
+            </div>
+            
+          </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+          <!-- small box -->
+          <div class="small-box bg-red">
+            <div class="inner">
+              <h3><?php echo $total_dokter; ?></h3>
+
+              <p>Total dokter terdaftar</p>
+            </div>
+            <div class="icon">
+              <i class="ion ion-pie-graph"></i>
+            </div>
+            
+          </div>
+        </div>
+        <!-- ./col -->
+      </div>
+      <!-- /.row -->
+
+      <div class="wall">
+        <p>Total pendaftar hari ini <?php echo $total_pendaftar_now; ?></p>
+        <p>Total masuk resep hari ini <?php echo $total_resep_now; ?></p>
+        
+        
+        <?php foreach($j as $k):echo $k; endforeach; ?>
+        </div>
 
 </section><!-- /.content -->
 
@@ -166,7 +148,7 @@ $(document).ready(function(){
     $("#tampil_addobat").toggle();
   })
 
-$("#table").DataTable();
+
 })
 </script>
 <script src="<?php echo base_url('assets/js/jquery-ui.min.js') ?>" type="text/javascript"></script>

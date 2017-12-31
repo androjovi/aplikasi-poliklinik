@@ -12,8 +12,37 @@
         <link href="<?php echo base_url('assets/AdminLTE-2.0.5/dist/css/AdminLTE.min.css') ?>" rel="stylesheet" type="text/css" />
         <!-- iCheck -->
         <link href="<?php echo base_url('assets/AdminLTE-2.0.5/plugins/iCheck/square/blue.css') ?>" rel="stylesheet" type="text/css" />
-        
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+ <script>
+            function login_admin(){
+                var link_t = "<?php echo site_url('auth/login_admin'); ?>"
+                
+                $("#action").attr('action',link_t);
+                $("#input_username").attr('placeholder','Username akun admin anda');
+                
+            }
+            
+            function login_apoteker(){
+                var link_t = "<?php echo site_url('auth/login_apoteker'); ?>"
+                
+                $("#action").attr('action',link_t);
+                $("#input_username").attr('placeholder','Username akun apoteker anda');
+		
+            }
+            
+            function login_dokter(){
+                var link_t = "<?php echo site_url('auth/login'); ?>"
+                
+                $("#action").attr('action',link_t);
+                
+                $("#input_username").attr('placeholder','Username akun dokter anda');
+		
+            }
+        </script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/particlesjs/2.1.0/particles.min.js"></script>
 
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -44,34 +73,12 @@
         </script>
     </head>
     <body class="login-page">
+<div id="particles-js"></div>
 
       <?php $pass="admin"; $password_h = password_hash($pass,PASSWORD_BCRYPT);
       echo $password_h;
        ?>
-        <script>
-            function login_admin(){
-                var link_t = "<?php echo site_url('auth/login_admin'); ?>"
-                
-                $("#action").attr('action',link_t);
-                $("#input_username").attr('placeholder','Username akun admin anda');
-                
-            }
-            
-            function login_apoteker(){
-                var link_t = "<?php echo site_url('auth/login_apoteker'); ?>"
-                
-                $("#action").attr('action',link_t);
-                $("#input_username").attr('placeholder','Username akun apoteker anda');
-            }
-            
-            function login_dokter(){
-                var link_t = "<?php echo site_url('auth/login'); ?>"
-                
-                $("#action").attr('action',link_t);
-                
-                $("#input_username").attr('placeholder','Username akun dokter anda');
-            }
-        </script>
+       
         <div class="login-box">
             <div class="login-logo">
                 <a href="#"><b>Poliklinik </b>LTE</a>
@@ -124,5 +131,6 @@
                 });
             });
         </script>
+
     </body>
 </html>

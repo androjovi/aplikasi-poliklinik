@@ -108,10 +108,13 @@ $this->load->view('page/template/sidebar');
           </tr>
           </thead>
           <tbody>
+              
+          <tr>
               <?php foreach ( $query2 as $k): $nmr = $k->nomor_resep; ?>
-              <tr>
+              
+              
                 <td><?php echo $k->qty; ?></td>
-                <td></td>
+                <td><?php echo $k->nama_obat; ?></td>
                 <td><?php echo $k->nomor_resep; ?></td>
                 <td><?php echo $k->detail_resep; ?></td>
                 <td><?php echo num_format($k->sub_total); ?></td>
@@ -119,7 +122,6 @@ $this->load->view('page/template/sidebar');
               <?php $total = $k->total_harga; ?>
               <?php endforeach; ?>
           </tbody>
-            
         </table>
       </div>
       <!-- /.col -->
@@ -174,7 +176,7 @@ $this->load->view('page/template/sidebar');
                 }
               </script>
               <form action="<?php echo site_url("pembayaran/struk/$psn/$nmr"); ?>" method="post">
-                  <input type="text" name="kembalian_s" value="" id="goback">
+                  
             <tr>
               <th>Bayar : </th>
               <td><input type="text" name="jumlah_bayar" class="form-control" placeholder="Total bayar" id="bayar"> <span class="input-group-btn"><button type="button" class="btn btn-info btn-flat" onclick="hitung_kembali()">Hitung kembalian</button></span></td>

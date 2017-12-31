@@ -33,6 +33,11 @@
             </li>
             <?php if ($this->session->userdata('aksesstatus') === 1): ?>
             <li class="treeview">
+                <a href="<?php echo site_url('info'); ?>">
+                    <i class="fa fa-database"></i> <span>Informasi</span> <i class="fa fa-angle-left pull-right"></i>
+                </a>
+            </li>
+            <li class="treeview">
                 <a href="#">
                     <i class="fa fa-database"></i> <span>Data master</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
