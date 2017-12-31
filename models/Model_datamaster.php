@@ -108,5 +108,9 @@ class Model_datamaster extends CI_Model{
   function get_poliklinik(){
     return $this->db->get('poliklinik');
   }
+  function like_data($like,$table){
+    $this->db->like($like);
+    return $this->db->get($table);
+  }
 
 }

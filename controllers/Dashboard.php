@@ -1,6 +1,15 @@
 <?php
 ob_start();
 class Dashboard extends CI_Controller{
+
+  /*
+      *     Programmer : Joviandro
+      *     Build with CI3
+      *     Author : Joviandro
+      *     Masih dalam pengembangan
+
+      ***********************************
+   */
     
             function __construct(){
               parent::__construct();

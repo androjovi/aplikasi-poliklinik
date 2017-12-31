@@ -96,6 +96,7 @@ class Apoteker extends CI_Controller{
                         'dosis'         => ambil('dosis'),
                         'sub_total'     => $totalkan,
                         'qty'           => ambil('jumlah_obat'),
+                        'nama_obat'     => $f->nama_obat,
                     );
                     $data2 = array(
                         'total_harga'   => $totalkan,

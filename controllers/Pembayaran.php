@@ -58,11 +58,15 @@ class Pembayaran extends CI_Controller{
             function bayar($kode,$kode_psn){
               $data['query'] = $this->model_pembayaran->read_pendaftar(decr($kode))->result();
               $data['query2'] = $this->model_dokter->get_resepinfov2(decr($kode_psn))->result();
+              
                 foreach($data['query2'] as $k){
                     $result[] = $k->sub_total;
-                    //$r['kode_obat'] = $k->kode_obat;
+                    
                 }
-                //$data['query3'] = $this->model_dokter->get_obatinfo($r)->result();
+                
+              
+                
+                
                 $data['totalharga'] = array_sum($result);
               $this->load->view('page/data_pembayaran/vw_bayar',$data);
             }

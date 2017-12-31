@@ -6,7 +6,6 @@ class Dokter extends CI_Controller{
                 
               $this->load->model('model_dokter');
               $this->load->library(array('pagination','session','cart','form_validation'));
-               
 
             }
 

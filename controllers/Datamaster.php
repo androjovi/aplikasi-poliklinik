@@ -532,4 +532,25 @@ class Datamaster extends CI_Controller{
               $data['query'] = $this->model_datamaster->read_pendaftar_where(decr($kode))->result();
               $this->load->view('page/data_pendaftar/vw_infopendaftar',$data);
             }
+
+            function search_dataobat(){
+              $data = array(
+                'nama_obat' => ambil('val_search'),
+              );
+              
+              $r = $this->model_datamaster->like_data($data,'obat');
+
+              foreach($r->result() as $k){
+                $parse = array(
+                  'kode_obat'   => $k->kode_obat,
+                  'nama_obat'   => $k->nama_obat,
+                  'harga_obat'  => $k->harga_obat,
+                  'jumlah_obat' => $k->jumlah_obat,
+                  'jenis_obat'  => $k->jenis_obat,
+                  'kategori'    => $k->kategori,
+                );
+                
+              }
+              echo json_encode($parse);
+            }
 }
